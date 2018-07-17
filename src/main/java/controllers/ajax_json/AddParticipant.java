@@ -42,7 +42,6 @@ public class AddParticipant extends HttpServlet {
         send = send.substring(0, send.length()-1);
         send+=",\"List\":" + prtcpntJson[0]+"}";
         response.getWriter().write(send);
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

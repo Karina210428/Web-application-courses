@@ -63,7 +63,7 @@ function getServletXML(form, servletUrl, button){
                 table +="<td>" + json[i].course.lecturer.surname + " " + json[i].course.lecturer.name + " " +json[i].course.lecturer.patronymic +"</td>";
                 table +="<td>" + json[i].grade + "</td>";
                 table +="<td>" +json[i].comment +"</td>";
-                table += "<td><a href='Update.html' id='buttonUpdate'>Update</a> <a href='Delete.html' id='buttonDelete' >Delete</a></td></tr>"
+                table += "<td><a href='Update.html' id='btn1'>Update</a> <a href='#'>Delete</a></td></tr>"
             }
             // Обновляем страницу с новым контентом
             document.getElementById('table').innerHTML = table;
