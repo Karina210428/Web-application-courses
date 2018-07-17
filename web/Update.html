@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
+    <link rel="stylesheet" href="Form.css" >
+    <link rel="stylesheet" href="Header.css" >
+</head>
+<body>
+<ul>
+    <li><a class="active" href="Main.html">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+</ul>
+<div class="container">
+    <form method="POST"  id="form" name ="test">
+        <div class="row">
+            <div class="col-25">
+                <label for="firstNameStudent">First Name</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="firstNameStudent" name="firstNameStudent" placeholder="Your name..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="lastNameStudent">Last Name</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="lastNameStudent" name="lastNameStudent" placeholder="Your last name..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="courseName">Name course</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="courseName" name="courseName" placeholder="Enter course name...">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="firstNameLecture">Lecture name</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="firstNameLecture" name="firstNameLecture" placeholder="Your lecturer name..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="patronymicLecture">Lecture patronymic</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="patronymicLecture" name="patronymicLecture" placeholder="Your lecturer name..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="surnameLecture">Lecture surname</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="surnameLecture" name="surnameLecture" placeholder="Your lecturer name..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="grade">Grade</label>
+            </div>
+            <div class="col-75">
+                <textarea id="grade" name="grade" placeholder="Write grade student.." style="height:200px"></textarea>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="comment">Comment</label>
+            </div>
+            <div class="col-75">
+                <textarea id="comment" name="comment" placeholder="Write comment about student.." style="height:200px"></textarea>
+            </div>
+
+        </div>
+        <div class="row">
+           <!----> <input type="submit" value="Edit" onclick="getServletXML(document.getElementById('form'),'/HTML/addAjaxJson','Update')">
+        </div>
+    </form>
+</div>
+</body>
+</html>
