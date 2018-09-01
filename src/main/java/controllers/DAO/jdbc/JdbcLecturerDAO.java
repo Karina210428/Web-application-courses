@@ -70,7 +70,7 @@ public class JdbcLecturerDAO extends JdbcGenericDAO<Lecturer> implements Lecture
                     lecturer.setName(rs.getString(LECTURER_COLUMN_NAME));
                     lecturer.setSurname(rs.getString(LECTURER_COLUMN_SURNAME));
                     lecturer.setPatronymic(rs.getString(LECTURER_COLUMN_PATRONYMIC));
-                    lecturer.setId(rs.getInt(LECTURER_COLUMN_ID_AUTH));
+                    lecturer.setId_auth(rs.getInt(LECTURER_COLUMN_ID_AUTH));
                     res.add(lecturer);
 	            }catch(SQLException ex) {
         	     }

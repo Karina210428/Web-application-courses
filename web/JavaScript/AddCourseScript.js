@@ -21,10 +21,10 @@ function getAddCourseForms(form, servletUrl){
                 patronymic:"patronymic",
                 name:"name"
             },
-            about:form.about.value
+            aboutCourse:form.about.value
         };
 
-        var jsonSend = JSON.stringify(regUser);
+        var jsonSend = JSON.stringify(addCourse);
 
         var xhr = new XMLHttpRequest();
         xhr.open('Post', servletUrl, true);

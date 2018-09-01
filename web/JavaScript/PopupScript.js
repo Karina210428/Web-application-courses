@@ -31,7 +31,8 @@ function listLecture(){
         id:1,
         surname:"surname",
         patronymic:"patronymic",
-        name:"name" };
+        name:"name",
+        id_auth:1};
 
     var jsonSend = JSON.stringify(lecturer);
     xhr.open('Post',"/ListLecture", true, "root","root");
