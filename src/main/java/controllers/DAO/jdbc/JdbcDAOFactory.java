@@ -60,4 +60,9 @@ public class JdbcDAOFactory extends DAOFactory {
     public ParticipantDAO getParticipantDAO() {
         return new JdbcParticipantDAO();
     }
+
+    @Override
+    public UsersDAO getUserDAO() {
+        return new JdbcUsersDAO();
+    }
 }

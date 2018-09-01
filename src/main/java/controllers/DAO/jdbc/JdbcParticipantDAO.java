@@ -15,7 +15,7 @@ import java.util.List;
 
 public class JdbcParticipantDAO extends JdbcGenericDAO<Participant> implements ParticipantDAO {
 
-    public static final String PARTICIPANT_COLUMN_ID = "id";
+    public static final String PARTICIPANT_COLUMN_ID = "idparticipant";
     public static final String PARTICIPANT_COLUMN_GRADE = "grade";
     public static final String PARTICIPANT_COLUMN_COMMENT = "comment";
     public static final String PARTICIPANT_COLUMN_STUDENT_ID = "student";
@@ -27,7 +27,7 @@ public class JdbcParticipantDAO extends JdbcGenericDAO<Participant> implements P
 
 	@Override
 	protected String getSelectQuery() {
-		return "SELECT p.*, p.id AS id_p, c.*, s.*, "
+		return "SELECT p.*, p.idparticipant AS id_p, c.*, s.*, "
 				+ "l.name AS name, l.surname AS surname, l.patronymic AS patronymic"
 				+ " FROM participant p "
 				+ "LEFT JOIN course c ON c.idCourse = course "
@@ -42,12 +42,12 @@ public class JdbcParticipantDAO extends JdbcGenericDAO<Participant> implements P
 
 	@Override
 	protected String getUpdateQuery() {
-		return "UPDATE participant SET course = ?, student = ?, grade = ?, comment = ? WHERE id = ?";
+		return "UPDATE participant SET course = ?, student = ?, grade = ?, comment = ? WHERE idparticipant = ?";
 	}
 
 	@Override
 	protected String getDeleteQuery() {
-		return "DELETE FROM participant WHERE id = ?";
+		return "DELETE FROM participant WHERE idparticipant = ?";
 	}
 
 	@Override

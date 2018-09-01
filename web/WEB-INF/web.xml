@@ -17,7 +17,62 @@
         <url-pattern>/Servlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AddCourse</servlet-name>
+        <servlet-class>controllers.ajax_json.AddCourse</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>AddCourse</servlet-name>
+        <url-pattern>/AddCourse</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ListLecture</servlet-name>
+        <servlet-class>controllers.ajax_json.ListLecture</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ListLecture</servlet-name>
+        <url-pattern>/ListLecture</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignUp</servlet-name>
+        <servlet-class>controllers.ajax_json.SignUp</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignUp</servlet-name>
+        <url-pattern>/SignUp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>getIdParticipant</servlet-name>
+        <servlet-class>controllers.ajax_json.GetIdParticipant</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getIdParticipant</servlet-name>
+        <url-pattern>/HTML/getIdParticipant</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userRegistration</servlet-name>
+        <servlet-class>controllers.ajax_json.RegistrationUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userRegistration</servlet-name>
+        <url-pattern>/HTML/userRegistration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteAjaxJson</servlet-name>
+        <servlet-class>controllers.ajax_json.DeleteParticipant</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteAjaxJson</servlet-name>
+        <url-pattern>/HTML/deleteAjaxJson</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>updateAjaxJson</servlet-name>
         <servlet-class>controllers.ajax_json.UpdateParticipant</servlet-class>

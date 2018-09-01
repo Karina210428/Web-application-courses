@@ -4,23 +4,109 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
     <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
-    <link rel="stylesheet" href="/CSS/Header.css" />
-    <link rel="stylesheet" href="/CSS/Table.css" />
+    <script type="text/javascript" src="JavaScript/PopupScript.js"></script>
+    <script type="text/javascript" src="JavaScript/AddCourseScript.js"></script>
+    <link rel="stylesheet" href="Header.css" />
+    <link rel="stylesheet" href="Table.css" />
+    <link rel="stylesheet" href="Popup.css" />
+    <link rel="stylesheet" href="Button.css" />
+    <link rel="stylesheet" href="AddCourseForm.css" />
+
 
 </head>
 <body onload="start('/HTML/sendAjaxJson')">
-<div class="header">
-    <h2>Scroll Down</h2>
-    <p>Scroll down to see the sticky effect.</p>
+<div class="wrapper">
+<div class="navcont">
+    <div class="nav">
+        <ul>
+            <li><a class="active" href="#home">Home</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a></li>
+
+            <li><a href="SignUp.html">Выход</a></li>
+            <li class="registMenu"><a href="Registration.html">Регистрация</a></li>
+        </ul>
+    </div>
 </div>
 
-<ul>
-    <li><a class="active" href="#home">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact">Contact</a></li>
-</ul>
-<table id="table"></table>
+<div class="container2">
+<div class="container">
+    <table id="table"></table>
 
-<input type="button" onclick="getServletXML(document.getElementById('form'),'1.html','Previous')"  name="buttonAdd" value="Previous"/>
+
+<div class="container1">
+    <div class="row">
+        <div class="vercticalfunc">
+            <a type="button" onclick="div_show();" class="btn" name="buttonAdd" >Добавить курс</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="vercticalfunc">
+            <a type="button" href="Update.html" class="btn" name="buttonAdd" >Добавить студента</a>
+        </div>
+    </div>
+</div>
+</div>
+<div class="hover_bkgr_fricc" id="abc"  >
+<span class="helper"></span>
+    <div>
+    <div id="closePopup" class="popupCloseButton" onclick="div_close();">X</div>
+        <div id="popupContact">
+            <form method="POST"  id="formAddCourse">
+                <h1 class="sign-up-title">Вход</h1>
+                <div class="row">
+                    <div class="col-25">
+                        <label >Название</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="sign-up-input" type="text" name="nameCourse" placeholder="Введите название нового курса..">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label >Дата начала курса</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="sign-up-input" type="date" name="startDate" >
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label >Дата окончания курса</label>
+                    </div>
+                    <div class="col-75">
+                        <input class="sign-up-input" type="date" name="finishDate" >
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label >Преподаватель курса</label>
+                    </div>
+                    <div class="col-75" id="CourseLecture">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label >Описание курса</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea placeholder="Описание курса.." name="about"></textarea>
+                    </div>
+                </div>
+                <div class="col-75">
+                    <a type="button" onclick="getAddCourseForms(document.getElementById('formAddCourse'),'/AddCourse')">Добавить</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
 </body>
 </html>
+

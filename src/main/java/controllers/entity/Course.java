@@ -1,18 +1,26 @@
 package controllers.entity;
 
+import java.util.Date;
+
 public class Course {
     private int id;
     private String name;
     private Lecturer lecturer;
+    private Date startDate;
+    private Date finishDate;
+    private String aboutCourse;
 
     public Course() {
 
     }
 
-    public Course(int id, String name, Lecturer lecturer) {
+    public Course(int id, String name, Lecturer lecturer, Date startDate, Date finishDate, String aboutCourse) {
         this.id = id;
         this.name = name;
         this.lecturer = lecturer;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.aboutCourse = aboutCourse;
     }
 
     public int getId() {
@@ -66,5 +74,29 @@ public class Course {
         return " " +
                 name + " Лектор: " +
                 (lecturer != null ? lecturer : "");
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(Date finishDate) {
+        this.finishDate = finishDate;
+    }
+
+    public String getAboutCourse() {
+        return aboutCourse;
+    }
+
+    public void setAboutCourse(String aboutCourse) {
+        this.aboutCourse = aboutCourse;
     }
 }

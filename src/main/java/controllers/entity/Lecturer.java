@@ -5,16 +5,18 @@ public class Lecturer {
     private String surname;
     private String patronymic;
     private String name;
+    private int id_auth;
 
     public Lecturer() {
 
     }
 
-    public Lecturer(int id, String surname, String name, String patronymic) {
+    public Lecturer(int id, String surname, String name, String patronymic, int id_auth) {
         this.id = id;
         this.name = name;
         this.patronymic = patronymic;
         this.surname = surname;
+        this.id_auth = id_auth;
     }
 
     public int getId() {
@@ -79,5 +81,13 @@ public class Lecturer {
         return "" + (surname != null ? surname: "") +
                 " " + ( name!= null ? name : " ")+
                 " " + (patronymic!= null ? patronymic: "");
+    }
+
+    public int getId_auth() {
+        return id_auth;
+    }
+
+    public void setId_auth(int id_auth) {
+        this.id_auth = id_auth;
     }
 }

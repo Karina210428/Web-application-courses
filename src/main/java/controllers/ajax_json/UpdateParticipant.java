@@ -2,7 +2,10 @@ package controllers.ajax_json;
 
 import com.google.gson.Gson;
 import controllers.DAO.DAOFactory;
+import controllers.entity.Course;
+import controllers.entity.Lecturer;
 import controllers.entity.Participant;
+import controllers.entity.Student;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,33 +18,59 @@ import java.util.List;
 
 public class UpdateParticipant extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        DAOFactory daoFactory = DAOFactory.getDAOFactory();
-        response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        DAOFactory daoFactory = DAOFactory.getDAOFactory();
+
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String json = "";
         if(br!=null){
             json = br.readLine();
         }
         Gson gson = new Gson();
-        Participant participant = gson.fromJson(json,Participant.class);
-        System.out.println(participant.getComment());
-        System.out.println(participant.getCourse());
-        System.out.println(participant.getStudent());
-        System.out.println(participant.getGrade());
-        daoFactory.getParticipantDAO().create(participant);
 
-        List<Participant> participantList = daoFactory.getParticipantDAO().findAll();
-        String [] prtcpntJson = new String[1];
-        prtcpntJson[0] = gson.toJson(participant.getId());
-        prtcpntJson[1] = gson.toJson(participantList);
+        Participant participant = gson.fromJson(json,Participant.class);
+        int id = participant.getId();
+        List<Participant> participantsListToFindByID = daoFactory.getParticipantDAO().findAll();
+        Participant participantToUpdate = participantsListToFindByID.get(id);
+        int idParticipantToUpdate = participantToUpdate.getId();
+
+        Student student = new Student();
+        student.setFirstName(participant.getStudent().getFirstName());
+        student.setLastName(participant.getStudent().getLastName());
+        daoFactory.getStudentDAO().create(student);
+        //получаем ид студента (идем по ид и получаем ид найденной записи)
+        student.setId(participantToUpdate.getStudent().getId());
+        daoFactory.getStudentDAO().update(student);
+
+        Lecturer lecturer = new Lecturer();
+        lecturer.setName(participant.getCourse().getLecturer().getName());
+        lecturer.setPatronymic(participant.getCourse().getLecturer().getPatronymic());
+        lecturer.setSurname(participant.getCourse().getLecturer().getSurname());
+        lecturer.setId(participantToUpdate.getCourse().getLecturer().getId());
+        daoFactory.getLecturerDAO().update(lecturer);
+
+        Course course = new Course();
+        course.setName(participant.getCourse().getName());
+        course.setLecturer(lecturer);
+        course.setId(participantToUpdate.getCourse().getId());
+        daoFactory.getCourseDAO().update(course);
+
+        Participant participant1 = new Participant();
+        participant.setStudent(student);
+        participant.setGrade(participant.getGrade());
+        participant.setComment(participant.getComment());
+        participant.setCourse(course);
+        participant.setId(idParticipantToUpdate);
+        daoFactory.getParticipantDAO().update(participant);
+
+        List<Participant> participantsList = daoFactory.getParticipantDAO().findAll();
+        String participantsJsonStr = gson.toJson(participantsList);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        String send = prtcpntJson[0];
-        send = send.substring(0, send.length()-1);
-        send+=",\"List\":" + prtcpntJson[0]+"}";
-        response.getWriter().write(send);
+        response.getWriter().write(participantsJsonStr);
 
     }
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="registr.css" />
+    <script type="text/javascript" src="JavaScript/Registr_login.js"></script>
+</head>
+<body>
+
+<div id="log_on"  class="sign-up">
+    <form method="POST"  id="formSign">
+    <h1 class="sign-up-title">Вход</h1>
+
+    <input class="sign-up-input" type="text" id="loginIN" name="loginIN" placeholder="Введите логин..">
+
+    <input class="sign-up-input" type="password" id="passwordIN" name="passwordIN" placeholder="Введите пароль..">
+
+        <div id="help-block" style="display: none">
+            <ul>
+                <li>Неверный логин или пароль</li>
+            </ul>
+        </div>
+
+    <input type="submit" class="sign-up-button" value="Войти на сайт" onclick="sign_up(document.getElementById('formSign'),'/SignUp')">
+    </form>
+
+    <p>Первый раз на сайте?</p><a  type="button" onclick=" window.location.href='Registration.html';" style="font-size: 26px;
+    color: #3a91b4;">Регистрация</a>
+</div>
+
+
+
+</body>
+</html>

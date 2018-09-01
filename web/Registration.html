@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="registr.css" />
+    <script type="text/javascript" src="JavaScript/Registr_login.js"></script>
+</head>
+<body>
+<div id="registration" style="display: block" class="sign-up">
+    <form method="POST"  id="formR">
+
+        <h1 class="sign-up-title">Регистрация</h1>
+
+
+        <input class="sign-up-input" type="text" id="login" name="login" placeholder="Придумайте логин..">
+
+
+        <input class="sign-up-input" type="text" id="fname" name="firstname" placeholder="Введите ваше имя..">
+
+
+        <input class="sign-up-input" type="text" id="patronymic" name="patronymic" placeholder="Введите ваше отчество..">
+
+
+        <input class="sign-up-input" type="text" id="lname" name="lastname" placeholder="Введите вашу фамилию..">
+
+        <label class="sign-up-title-select" for="occupation">Род деятельности</label>
+        <select class="sign-up-select" id="occupation" name="occupation" style="color: #aaa ">
+            <option value=student>Студент</option>
+            <option value=teacher>Учитель</option>
+        </select>
+
+
+        <input class="sign-up-input" type="password" id="password1" name="password1" placeholder="Введите пароль..">
+
+
+        <input class="sign-up-input" type="password" id="password2" name="password2" placeholder="Введите пароль повторно..">
+
+        <input type="submit" class="sign-up-button" value="Регистрация" onclick='getRegistrForms(document.getElementById("formR"),"/HTML/userRegistration");' >
+    </form>
+    <p>Уже зарегистрированы? </p>
+    <a onclick="window.location.href='SignUp.html';"
+       type="button" style="font-size: 26px;
+    color: #b41921;">Войти</a>
+
+</div>
+</body>
+</html>

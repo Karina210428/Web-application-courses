@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
-    <link rel="stylesheet" href="CSS/Form.css" >
-    <link rel="stylesheet" href="CSS/Header.css" >
+    <link rel="stylesheet" href="Form.css" >
+    <link rel="stylesheet" href="Header.css" >
 </head>
 <body>
-<ul>
-    <li><a class="active" href="Main.html">Home</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a href="#contact">Contact</a></li>
-</ul>
+<div class="navcont">
+    <div class="nav">
+        <ul>
+            <li><a class="active" href="#home">Home</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a></li>
+
+            <li><a href="SignUp.html">Выход</a></li>
+            <li class="registMenu"><a href="Registration.html">Регистрация</a></li>
+        </ul>
+    </div>
+</div>
 <div class="container">
     <form method="POST"  id="form" name ="test">
         <div class="row">
@@ -20,7 +27,7 @@
                 <label for="firstNameStudent">First Name</label>
             </div>
             <div class="col-75">
-                <input type="text" id="firstNameStudent" name="firstNameStudent" placeholder="Your name..">
+                <input type="text"  class="sign-up-input" id="firstNameStudent" name="firstNameStudent" placeholder="Your name..">
             </div>
         </div>
         <div class="row">
@@ -81,8 +88,10 @@
             </div>
 
         </div>
-        <div class="row">
-           <input type="submit" value="Edit" onclick="getServletXML(document.getElementById('form'),'/HTML/updateAjaxJson','Update')"/>
+        <div class="col-75">
+        <div >
+           <input type='submit'  id='buttonAddOrUpdate' value='Add' onclick='getServletXML(document.getElementById("form"),"/HTML/addAjaxJson","Add")'>
+        </div>
         </div>
     </form>
 </div>
