@@ -6,15 +6,15 @@ function start(servletUrl){
         if (xhr.readyState == 4 && xhr.status== 200) {
             var json  = JSON.parse(xhr.responseText);
            // console.log(json.student +"  "+json.grade);
-            var table="<tr><th>Student</th><th>Course</th><th>Lecturer</th><th>Grade</th><th>Comment</th><th>Action</th></tr>";
+            var table="<tr><th>Студент</th><th>Курс</th><th>Лектор</th><th>Оценка</th><th>Примечание</th><th></th></tr>";
             for (var i = 0; i < json.length; i++) { // Перебираем объекты
                 table += "<tr><td>" + json[i].student.firstName + " "+ json[i].student.lastName +"</td>";
                 table +="<td>" + json[i].course.name + "</td>";
                 table +="<td>" + json[i].course.lecturer.surname + " " + json[i].course.lecturer.name + " " +json[i].course.lecturer.patronymic +"</td>";
                 table +="<td>" + json[i].grade + "</td>";
                 table +="<td>" +json[i].comment +"</td>";
-                table += "<td><a href='Update.html'  onclick='f(this.parentNode.parentNode.rowIndex)'>Updaye</a>" +
-                    "<input type='button' onclick=getServletXMLDel('/HTML/deleteAjaxJson',this) value='Delete'></td></tr>";
+                table += "<td><a href='Update.html'  onclick='f(this.parentNode.parentNode.rowIndex)'>Оценить студента</a>" +
+                    "<input type='button' onclick=getServletXMLDel('/HTML/deleteAjaxJson',this) value='Удалить студента'></td></tr>";
             }
             // Обновляем страницу с новым контентом
             document.getElementById('table').innerHTML = table;
@@ -61,15 +61,15 @@ function getServletXMLDel(servletUrl,r){
         if (xhr.readyState == 4 && xhr.status== 200) {
             var json  = JSON.parse(xhr.responseText);
             //console.log(json.student +"  "+json.grade);
-            var table="<tr><th>Student</th><th>Course</th><th>Lecturer</th><th>Grade</th><th>Comment</th><th>Action</th></tr>";
+            var table="<tr><th>Студент</th><th>Курс</th><th>Лектор</th><th>Оценка</th><th>Примечание</th><th></th></tr>";
             for (var i = 0; i < json.length; i++) { // Перебираем объекты
                 table += "<tr><td>" + json[i].student.firstName + " "+ json[i].student.lastName +"</td>";
                 table +="<td>" + json[i].course.name + "</td>";
                 table +="<td>" + json[i].course.lecturer.surname + " " + json[i].course.lecturer.name + " " +json[i].course.lecturer.patronymic +"</td>";
                 table +="<td>" + json[i].grade + "</td>";
                 table +="<td>" +json[i].comment +"</td>";
-                table += "<td><a href='Update.html'  onclick=getID(this) >Updaye</a> " +
-                    "<input type='button' onclick=getServletXMLDel('/HTML/deleteAjaxJson','Delete',this) value='Delete'></td></tr>";
+                table += "<td><a href='Update.html'  onclick=getID(this) >Оценить студента</a> " +
+                    "<input type='button' onclick=getServletXMLDel('/HTML/deleteAjaxJson','Delete',this) value='Удалить студента'></td></tr>";
             }
             // Обновляем страницу с новым контентом
             document.getElementById('table').innerHTML = table;

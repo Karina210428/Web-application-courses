@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Start</title>
+    <script type="text/javascript" src="JavaScript/loadLoginPage.js"></script>
+
+    <link rel="stylesheet" href="registr.css" />
+</head>
+<body >
+
+<h1 th:text="#{local.button.login}" ></h1>
+
+<span th:text="#{lang.change}">выберите язык</span>:
+<select id="language" onchange="fun(this.options[this.selectedIndex].value)">
+    <option value="en" text="en">en</option>
+    <option value="ru" text="ru">ru</option>
+</select>
+
+<div id="pppp"></div>
+
+<div id="getSession">
+    <input type="button" value="click there" onclick="getSession()">
+</div>
+
+<script>
+    function  getSession(){
+        var request = new XMLHttpRequest();
+        /*var params = {
+            language:""
+        };
+        params.language = languageString;
+        var jsonSend = JSON.stringify(params);*/
+        request.open("post", "/SetLocale", true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.onreadystatechange = function(){
+            if(request.readyState == 4 && request.status == 200){
+                var data = JSON.parse(request.responseText);
+                document.getElementById("pppp").innerText+="<h3>"+data["label.button.login"]+"</h3>";
+                //console.log(data.locale);
+                // startForm.style.display = "none";
+                //createLoginForm(data);
+            }
+        }
+        request.send(null);
+
+    }
+</script>
+
+<script>
+    function fun(languageString){
+        document.getElementById("pppp").innerText = "<h1>"+languageString+"</h1>";
+        var request = new XMLHttpRequest();
+        var params = {
+            language:""
+        };
+
+        params.language = languageString;
+        var jsonSend = JSON.stringify(params);
+        request.open("post", "/SetLocale", true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.onreadystatechange = function(){
+            if(request.readyState == 4 && request.status == 200){
+                var data = JSON.parse(request.responseText);
+                document.getElementById("pppp").innerText+="<h3>"+data.locale+"</h3>";
+                console.log(data.locale);
+               // startForm.style.display = "none";
+                createLoginForm(data);
+            }
+        }
+        request.send(jsonSend);
+    }
+</script>
+
+</body>
+</html>

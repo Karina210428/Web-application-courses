@@ -1,4 +1,4 @@
-package controllers.ajax_json;
+package controllers.Servlets;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;

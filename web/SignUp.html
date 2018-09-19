@@ -16,13 +16,7 @@
 
     <input class="sign-up-input" type="password" id="passwordIN" name="passwordIN" placeholder="Введите пароль..">
 
-        <div id="help-block" style="display: none">
-            <ul>
-                <li>Неверный логин или пароль</li>
-            </ul>
-        </div>
-
-    <input type="submit" class="sign-up-button" value="Войти на сайт" onclick="sign_up(document.getElementById('formSign'),'/SignUp')">
+    <input type="submit" class="sign-up-button" value="Войти на сайт" onclick="sign_up(document.getElementById('formSign'),'/LoginServlet')">
     </form>
 
     <p>Первый раз на сайте?</p><a  type="button" onclick=" window.location.href='Registration.html';" style="font-size: 26px;

@@ -1,10 +1,11 @@
-package controllers.ajax_json;
+package controllers.Servlets;
 
 import com.google.gson.Gson;
 import controllers.DAO.DAOFactory;
-import controllers.entity.Participant;
+import controllers.entity.Lecturer;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,13 +14,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class DeleteParticipant extends HttpServlet {
+@WebServlet(name = "ListLecture")
+public class ListLecture extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         DAOFactory daoFactory = DAOFactory.getDAOFactory();
-
+        List<Lecturer> lecturersList = daoFactory.getLecturerDAO().findAll();
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String json = "";
@@ -27,18 +29,12 @@ public class DeleteParticipant extends HttpServlet {
             json = br.readLine();
         }
         Gson gson = new Gson();
-
-        Participant participant = gson.fromJson(json,Participant.class);
-        int id = participant.getId();
-        List<Participant> participantsListToFindByID = daoFactory.getParticipantDAO().findAll();
-        Participant participantForDelete = participantsListToFindByID.get(id);
-        daoFactory.getParticipantDAO().delete(participantForDelete);
-        List<Participant> participantsList = daoFactory.getParticipantDAO().findAll();
-        String participantsJsonStr = gson.toJson(participantsList);
+        //serialization
+        String lecturersJsonStr =  gson.toJson(lecturersList);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(participantsJsonStr);
+        response.getWriter().write(lecturersJsonStr);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

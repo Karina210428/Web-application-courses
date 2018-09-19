@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <welcome-file-list>
-        <welcome-file>Main.html</welcome-file>
+        <welcome-file>Start.html</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -18,8 +18,38 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>LocaleLangServlet</servlet-name>
+        <servlet-class>controllers.Servlets.LocaleLangServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>SetLocale</servlet-name>
+        <servlet-class>controllers.Servlets.SetLocale</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SetLocale</servlet-name>
+        <url-pattern>/SetLocale</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>LocaleLangServlet</servlet-name>
+        <url-pattern>/LocaleLangServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>controllers.Servlets.LoginServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>AddCourse</servlet-name>
-        <servlet-class>controllers.ajax_json.AddCourse</servlet-class>
+        <servlet-class>controllers.Servlets.AddCourse</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -29,7 +59,7 @@
 
     <servlet>
         <servlet-name>ListLecture</servlet-name>
-        <servlet-class>controllers.ajax_json.ListLecture</servlet-class>
+        <servlet-class>controllers.Servlets.ListLecture</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -39,7 +69,7 @@
 
     <servlet>
         <servlet-name>SignUp</servlet-name>
-        <servlet-class>controllers.ajax_json.SignUp</servlet-class>
+        <servlet-class>controllers.Servlets.SignUp</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -49,7 +79,7 @@
 
     <servlet>
         <servlet-name>getIdParticipant</servlet-name>
-        <servlet-class>controllers.ajax_json.GetIdParticipant</servlet-class>
+        <servlet-class>controllers.Servlets.GetIdParticipant</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>getIdParticipant</servlet-name>
@@ -58,7 +88,7 @@
 
     <servlet>
         <servlet-name>userRegistration</servlet-name>
-        <servlet-class>controllers.ajax_json.RegistrationUser</servlet-class>
+        <servlet-class>controllers.Servlets.RegistrationUser</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>userRegistration</servlet-name>
@@ -67,7 +97,7 @@
 
     <servlet>
         <servlet-name>deleteAjaxJson</servlet-name>
-        <servlet-class>controllers.ajax_json.DeleteParticipant</servlet-class>
+        <servlet-class>controllers.Servlets.DeleteParticipant</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteAjaxJson</servlet-name>
@@ -75,7 +105,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>updateAjaxJson</servlet-name>
-        <servlet-class>controllers.ajax_json.UpdateParticipant</servlet-class>
+        <servlet-class>controllers.Servlets.UpdateParticipant</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>updateAjaxJson</servlet-name>
@@ -83,7 +113,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>addAjaxJson</servlet-name>
-        <servlet-class>controllers.ajax_json.AddParticipant</servlet-class>
+        <servlet-class>controllers.Servlets.AddParticipant</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addAjaxJson</servlet-name>
@@ -91,10 +121,12 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>sendAjaxJson</servlet-name>
-        <servlet-class>controllers.ajax_json.AjaxJson</servlet-class>
+        <servlet-class>controllers.Servlets.AjaxJson</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>sendAjaxJson</servlet-name>
         <url-pattern>/HTML/sendAjaxJson</url-pattern>
     </servlet-mapping>
+
+
 </web-app>

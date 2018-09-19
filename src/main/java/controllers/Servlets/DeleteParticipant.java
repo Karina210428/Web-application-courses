@@ -1,4 +1,4 @@
-package controllers.ajax_json;
+package controllers.Servlets;
 
 import com.google.gson.Gson;
 import controllers.DAO.DAOFactory;
@@ -13,12 +13,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-public class GetIdParticipant extends HttpServlet {
+public class DeleteParticipant extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         DAOFactory daoFactory = DAOFactory.getDAOFactory();
+
 
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String json = "";
@@ -30,8 +31,10 @@ public class GetIdParticipant extends HttpServlet {
         Participant participant = gson.fromJson(json,Participant.class);
         int id = participant.getId();
         List<Participant> participantsListToFindByID = daoFactory.getParticipantDAO().findAll();
-        Participant participantToUpdate = participantsListToFindByID.get(id);
-        String participantsJsonStr = gson.toJson(participantToUpdate);
+        Participant participantForDelete = participantsListToFindByID.get(id);
+        daoFactory.getParticipantDAO().delete(participantForDelete);
+        List<Participant> participantsList = daoFactory.getParticipantDAO().findAll();
+        String participantsJsonStr = gson.toJson(participantsList);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

@@ -5,20 +5,20 @@
 }
 
 #table td, #table th {
-    border: 1px solid #ddd;
     padding: 8px;
 }
 
-#table tr:nth-child(even){background-color: #f2f2f2;}
+#table tr:nth-child(even){background-color: #fbfffd;}
 
-#table tr:hover {background-color: #ddd;}
+#table tr:hover {background-color: #ffd7ab;
+border-radius: 2px;}
 
 #table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #fbfffd;
+    color: #ff5700;
 }
 
 .container {
@@ -27,7 +27,7 @@
     /* top: 40px; */
     left: -160px;
     width: 74%;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: #fbfffd;
     padding: 15px;
 }

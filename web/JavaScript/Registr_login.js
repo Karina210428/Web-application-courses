@@ -43,25 +43,27 @@ function sign_up(form,servletUrl){
     var jsonSend = JSON.stringify(signUpUser);
 
     var xhr = new XMLHttpRequest();
+    var params = "command=login&login=" +form.loginIN.value + "&password=" + form.passwordIN.value;
     xhr.open('Post', servletUrl, true);
     xhr.setRequestHeader('Content-Type', 'application/json; ');
     //var json  = JSON.parse(xhr.responseText);
     xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status== 200) {
-            var json  = JSON.parse(xhr.responseText);
-            console.log(json.flag);
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
 
-            if(json.flag == true && json.occupation=="teacher"){
-                window.location.href = "Main.html" ;
-            }else if(json.flag == true && json.occupation=="student"){
-               window.location.href = "Main.html" ;
-           }else if(json.flag== false){
-               document.getElementById("help-block").style.display = "block";
-           }
-            // Обновляем страницу с новым контентом
-            //document.getElementById('table').innerHTML = table;
+                var data = JSON.parse(xhr.responseText);
+                console.log(json.flag);
+                if(data.url = null){
+                 var div = document.createElement("div");
+                 div.id = "result";
+                 console.log("Error");
+                }else {
+                    window.location = data.url;
+                }
+            }
+
         }
     }
 
-    xhr.send(jsonSend);
+    xhr.send(params);
 }

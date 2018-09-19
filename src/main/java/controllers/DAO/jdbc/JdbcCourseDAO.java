@@ -27,12 +27,12 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
 
 	@Override
 	protected String getCreateQuery() {
-		return "INSERT INTO course (nameCourse, lecturer_id) VALUES (?, ?)";
+		return "INSERT INTO course (nameCourse, lecturer_id, startDate, finishDate, about) VALUES (?, ?, ?,?,?)";
 	}
 
 	@Override
 	protected String getUpdateQuery() {
-		return "UPDATE course SET nameCourse = ?, lecturer_id = ? WHERE idCourse = ?";
+		return "UPDATE course SET nameCourse = ?, lecturer_id = ?,startDate = ?, finishDate= ?, about=? WHERE idCourse = ?";
 	}
 
 	@Override
@@ -44,13 +44,19 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
 	protected void prepareStatementForCreate(PreparedStatement statement, Course entity) throws SQLException {
 		statement.setString(1, entity.getName());
 		statement.setInt(2, entity.getLecturer().getId());
+		statement.setString(3,entity.getStartDate());
+		statement.setString(4,entity.getFinishDate());
+		statement.setString(5,entity.getAboutCourse());
 	}
 
 	@Override
 	protected void prepareStatementForUpdate(PreparedStatement statement, Course entity) throws SQLException {
 		statement.setString(1, entity.getName());
 		statement.setInt(2,entity.getLecturer().getId());
-		statement.setInt(3,entity.getId());
+		statement.setInt(6,entity.getId());
+		statement.setString(3,entity.getStartDate());
+		statement.setString(4,entity.getFinishDate());
+		statement.setString(5,entity.getAboutCourse());
 	}
 
 	@Override
