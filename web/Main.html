@@ -1,50 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Insert title here</title>
     <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
     <script type="text/javascript" src="JavaScript/PopupScript.js"></script>
     <script type="text/javascript" src="JavaScript/AddCourseScript.js"></script>
-    <link rel="stylesheet" href="Header.css" />
-    <link rel="stylesheet" href="Table.css" />
-    <link rel="stylesheet" href="Popup.css" />
-    <link rel="stylesheet" href="Button.css" />
-    <link rel="stylesheet" href="AddCourseForm.css" />
+    <script type="text/javascript" src="JavaScript/Locale.js"></script>
+    <link rel="stylesheet" href="CSS/Header.css" />
+    <link rel="stylesheet" href="CSS/Table.css" />
+    <link rel="stylesheet" href="CSS/Popup.css" />
+    <link rel="stylesheet" href="CSS/Button.css" />
+    <link rel="stylesheet" href="CSS/AddCourseForm.css" />
 
 
 </head>
-<body onload="start('/HTML/sendAjaxJson')">
+<body onload="fun('en', 'Main'),start('/HTML/sendAjaxJson')">
 <div class="wrapper">
 <div class="navcont">
     <div class="nav">
         <ul>
-            <li><a class="active" href="Mail.html">Home</a></li>
+            <li><a class="active" href="Main.html" id="aHome"></a></li>
 
-            <li><a href="SignUp.html">Выход</a></li>
-            <li class="registMenu"><a href="Registration.html">Регистрация</a></li>
+            <li><a href="SignUp.html" id="aExit"></a></li>
+            <li class="registMenu"><a href="Registration.html" id="aReg"></a></li>
+            <li ><a href="CoursePage.html" id="aCourseListPage"></a></li>
+            <li >
+            <ul style="list-style-type: none">
+            <li><p id="selectLang">Language</p></li>
+                <li>
+                <select style="height: 50px; " id="language" onchange="fun(this.options[this.selectedIndex].value, 'Main')">
+                    <option value="en" text="en">en</option>
+                    <option value="ru" text="ru">ru</option>
+                </select>
+                </li>
+            </ul>
+            </li>
+            <li><a type="button" onclick="div_show();" id="addCourse"></a></li>
+            <!--<li><a type="button" href="AddEntry.html"  id="addStudent"></a></li>-->
+            <!--<li><a type="button" href="Profile.html"  id="profile">Profile</a></li>-->
         </ul>
     </div>
 </div>
 
 <div class="container2">
 <div class="container">
-    <table id="table"></table>
+
+    <table id="table">
+        <tr><th>№</th><th id='tableThStudent'></th><th id='tableThCourse'></th><th id='tableThLecturer'></th><th id='tableThGrade'></th><th id='tableThComment'></th><th></th></tr>
+    </table>
 
 
-<div class="container1">
-    <div class="row">
-        <div class="vercticalfunc">
-            <a type="button" onclick="div_show();" class="btn" name="buttonAdd" >Добавить курс</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="vercticalfunc">
-            <a type="button" href="Update.html" class="btn" name="buttonAdd" >Добавить студента</a>
-        </div>
-    </div>
-</div>
-</div>
+<!--<div class="container1">-->
+    <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="vercticalfunc">&ndash;&gt;-->
+            <!--&lt;!&ndash;<a type="button" onclick="div_show();" class="btn" name="buttonAdd"  id="addCourse"></a>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+    <!--<div class="row">-->
+        <!--<div class="vercticalfunc">-->
+            <!--<a type="button" href="Update.html" class="btn" name="buttonAdd" id="addStudent"></a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--</div>-->
 
 <div class="hover_bkgr_fricc" id="abc"  >
 <span class="helper"></span>
@@ -52,19 +71,19 @@
     <div id="closePopup" class="popupCloseButton" onclick="div_close();">X</div>
         <div id="popupContact">
             <form method="POST"  id="formAddCourse">
-                <h1 class="sign-up-title">Добавление курса</h1>
+                <h1 class="sign-up-title" id="titlePopup"></h1>
                 <div class="row">
                     <div class="col-25">
-                        <label >Название</label>
+                        <label id="labelPopupName"></label>
                     </div>
                     <div class="col-75">
-                        <input class="sign-up-input" type="text" name="nameCourse" placeholder="Введите название нового курса..">
+                        <input class="sign-up-input" type="text" name="nameCourse" id="inputPopupName">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-25">
-                        <label >Дата начала курса</label>
+                        <label id="labelPopupStartDate"></label>
                     </div>
                     <div class="col-75">
                         <input class="sign-up-input" type="date" name="startDate" >
@@ -73,7 +92,7 @@
 
                 <div class="row">
                     <div class="col-25">
-                        <label >Дата окончания курса</label>
+                        <label id="labelPopupFinishDate" ></label>
                     </div>
                     <div class="col-75">
                         <input class="sign-up-input" type="date" name="finishDate" >
@@ -82,23 +101,14 @@
 
                 <div class="row">
                     <div class="col-25">
-                        <label >Преподаватель курса</label>
-                    </div>
-                    <div class="col-75" id="CourseLecture">
-
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-25">
-                        <label >Описание курса</label>
+                        <label id="labelPopupAbout"></label>
                     </div>
                     <div class="col-75">
-                        <textarea placeholder="Описание курса.." name="about"></textarea>
+                        <textarea id="textareaPopupAbout" name="about"></textarea>
                     </div>
                 </div>
                 <div class="col-75">
-                    <a type="button" onclick="getAddCourseForms(document.getElementById('formAddCourse'),'/AddCourse')">Добавить</a>
+                    <a type="button" id="PopupAddCourse" onclick="getAddCourseForms(document.getElementById('formAddCourse'),'/AddCourse')"></a>
                 </div>
             </form>
         </div>

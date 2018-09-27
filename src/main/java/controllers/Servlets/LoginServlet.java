@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 public class LoginServlet extends HttpServlet {
 
-    private Logger log = Logger.getLogger(LoginServlet.class.getName());
+   // private Logger log = Logger.getLogger(LoginServlet.class.getName());
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.info("Information");
+        //log.info("Information");
         ActionFactory client = new ActionFactory();
         ActionCommand command = client.defineCommand(request);
         String answer = null;

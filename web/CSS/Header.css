@@ -71,10 +71,10 @@ a:hover, a:active, a:focus {
 }
 
 .nav {
-    height: 55px;
+    height: 60px;
     /*background: transparent url(http://i50.tinypic.com/bj0nm.png) center bottom no-repeat;*/
     padding-bottom: 7px;
-    margin-bottom: 43px;
+    margin-bottom: 45px;
 }
 
 .nav ul {
@@ -105,9 +105,9 @@ a:hover, a:active, a:focus {
     display: inline-block;
 }
 .nav ul li a {
-    line-height: 45px;
+    line-height: 50px;
     padding: 0 20px;
-    height: 45px;
+    height: 50px;
     color: #777;
 }
 .nav ul li a:hover {

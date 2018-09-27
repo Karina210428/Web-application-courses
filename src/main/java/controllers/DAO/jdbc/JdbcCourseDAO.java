@@ -15,14 +15,16 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
     public static final String COURSE_COLUMN_ID = "idCourse";
     public static final String COURSE_COLUMN_NAME = "nameCourse";
     public static final String COURSE_COLUMN_LECTURER_ID = "lecturer_id";
+	public static final String COURSE_COLUMN_STARTDATE = "startDate";
+	public static final String COURSE_COLUMN_FINISHDATE = "finishDate";
+	public static final String COURSE_COLUMN_ABOUT = "about";
 	public static final String PARTICIPANT_LECTURER_NAME = "name";
 	public static final String PARTICIPANT_LECTURER_SURNAME = "surname";
 	public static final String PARTICIPANT_LECTURER_PATRONYMIC = "patronymic";
     
 	@Override
 	protected String getSelectQuery() {
-		return "SELECT c.*, l.name, l.surname, l.patronymic "
-				+ "FROM course c LEFT JOIN lecturer l ON c.lecturer_id = l.idLecturer ";
+		return "SELECT c.*, l.name, l.surname, l.patronymic FROM course c LEFT JOIN lecturer l ON c.lecturer_id = l.idLecturer ";
 	}
 
 	@Override
@@ -74,10 +76,13 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
 				   course.setName(rs.getString(COURSE_COLUMN_NAME));
                    Lecturer lecturer = new Lecturer();
                    lecturer.setId(rs.getInt(COURSE_COLUMN_LECTURER_ID));
-                  //lecturer.setName(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_NAME));
-                   //lecturer.setSurname(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_SURNAME));
-                   //lecturer.setPatronymic(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_PATRONYMIC));
+                   lecturer.setName(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_NAME));
+                   lecturer.setSurname(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_SURNAME));
+                   lecturer.setPatronymic(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_PATRONYMIC));
                    course.setLecturer(lecturer);
+                   course.setStartDate(rs.getString(COURSE_COLUMN_STARTDATE));
+					course.setFinishDate(rs.getString(COURSE_COLUMN_FINISHDATE));
+					course.setAboutCourse(rs.getString(COURSE_COLUMN_ABOUT));
                    res.add(course);
                    }catch(SQLException ex) {
             	       //Logger.getLogger(JdbcCourseDao.class.getName()).log(Level.ERROR, null, ex);
@@ -94,6 +99,24 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
 		try (Connection connection = JdbcDAOFactory.getConnection();
 			 PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setString(1, nameCourse);
+			ResultSet rs = statement.executeQuery();
+			list = parseResultSet(rs);
+			if (list == null || list.isEmpty()) {
+				return null;
+			}
+			return list.get(0);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public Course getCourseById(int id) {
+		List<Course> list;
+		String sql = "SELECT * FROM course WHERE nameCourse = ? ";
+		try (Connection connection = JdbcDAOFactory.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1,id);
 			ResultSet rs = statement.executeQuery();
 			list = parseResultSet(rs);
 			if (list == null || list.isEmpty()) {

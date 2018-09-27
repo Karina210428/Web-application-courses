@@ -2,6 +2,8 @@ package controllers.Servlets.loginCommand;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import controllers.DAO.DAOFactory;
+import controllers.entity.Lecturer;
 import controllers.entity.Users;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,18 +19,20 @@ public class LoginCommand implements ActionCommand{
         String data = null;
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
-
-        if(LoginLogic.checkLogin(login,password)) {
+        boolean flagCheckLogin = LoginLogic.checkLogin(login,password);
+        if(flagCheckLogin == true) {
 
             Users current = LoginLogic.defineUser(login,password);
             String jsonUser = new Gson().toJson(current);
+            DAOFactory daoFactory = DAOFactory.getDAOFactory();
+            Lecturer lecturer = daoFactory.getLecturerDAO().getLectureByIdAuth(current.getId());
 
             HttpSession session = request.getSession(false);
             session.setAttribute("user",jsonUser);
+            session.setAttribute("lecturer",lecturer);
 
             JsonObject jobj = new JsonObject();
-            String urlToRedirect = current.getOccupation() == "teacher"
-            ? "Main.html" : "Main.html";
+            String urlToRedirect =  "Main.html";
 
             jobj.addProperty("url",urlToRedirect);
             data = jobj.toString();

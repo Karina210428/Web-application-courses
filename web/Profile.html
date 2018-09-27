@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
+    <script type="text/javascript" src="JavaScript/PopupScript.js"></script>
+    <script type="text/javascript" src="JavaScript/DeleteProfile.js"></script>
+    <script type="text/javascript" src="JavaScript/Locale.js"></script>
+    <link rel="stylesheet" href="CSS/Header.css" />
+    <link rel="stylesheet" href="CSS/Table.css" />
+    <link rel="stylesheet" href="CSS/registr.css" />
+    <link rel="stylesheet" href="CSS/Button.css" />
+    <link rel="stylesheet" href="CSS/AddCourseForm.css" />
+
+
+</head>
+<body onload="fun('en', 'Profile'),start('/HTML/sendAjaxJson')">
+<div class="wrapper">
+    <div class="navcont">
+        <div class="nav">
+            <ul>
+                <li><a class="active" href="Main.html" id="aHome"></a></li>
+
+                <li><a href="SignUp.html" id="aExit"></a></li>
+                <li class="registMenu"><a href="Registration.html" id="aReg"></a></li>
+                <li ><a href="CoursePage.html" id="aCourseListPage"></a></li>
+                <li >
+                    <ul style="list-style-type: none">
+                        <li><p id="selectLang">Language</p></li>
+                        <li>
+                            <select style="height: 50px; " id="language" onchange="fun(this.options[this.selectedIndex].value, 'Profile')">
+                                <option value="en" text="en">en</option>
+                                <option value="ru" text="ru">ru</option>
+                            </select>
+                        </li>
+                    </ul>
+                </li>
+                <li><a type="button" onclick="div_show();" id="addCourse"></a></li>
+                <li><a type="button" href="AddEntry.html"  id="addStudent"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <div class="container2">
+        <div class="container">
+
+            <input type="submit" id="buttonDeleteProfile"  class="sign-up-button" onclick="deleteProfile()">
+
+
+            </div>
+        </div>
+</body>
+</html>
+

@@ -1,17 +1,17 @@
-function getRegistrForms(form, servletUrl){
+function getRegisterForms(form, servletUrl){
     var flag=false;
     if(form.lastname.value=="")
-        flag="Р’С‹ РЅРµ РІРІРµР»Рё СЃРІРѕСЋ С„Р°РјРёР»РёСЋ";
+        flag="Вы не ввели свою фамилию";
     else if(form.firstname.value=="")
-        flag="Р’С‹ РЅРµ РІРІРµР»Рё СЃРІРѕС‘ РёРјСЏ";
+        flag="Вы не ввели своё имя";
     else if(form.patronymic.value=="")
-        flag="Р’С‹ РЅРµ РІРІРµР»Рё РѕС‚С‡РµСЃС‚РІРѕ";
+        flag="Вы не ввели отчество";
     else if(form.login.value=="")
-        flag="Р’С‹ РЅРµ РІРІРµР»Рё Р»РѕРіРёРЅ";
+        flag="Вы не ввели логин";
     else if(form.password1.value=="")
-        flag="Р’С‹ РЅРµ РІРІРµР»Рё РїР°СЂРѕР»СЊ";
+        flag="Вы не ввели пароль";
     else if(form.password1.value != form.password2.value)
-        flag="РџР°СЂРѕР»Рё РЅРµ СЃРѕРІРїР°РґР°СЋС‚";
+        flag="Пароли не совпадают";
     if(flag) alert(flag);
 if(flag==false) {
 
@@ -20,7 +20,6 @@ if(flag==false) {
         lastName: form.lastname.value,
         firstName: form.firstname.value,
         patronymic: form.patronymic.value,
-        occupation: form.occupation.value,
         password: form.password1.value,
     };
 

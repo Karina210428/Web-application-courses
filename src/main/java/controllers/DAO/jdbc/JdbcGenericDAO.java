@@ -96,7 +96,7 @@ public abstract class JdbcGenericDAO<T> implements GenericDAO<T> {
         sql+= "where id = "+id+"";
         try(Connection connection = JdbcDAOFactory.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql)){
-            //statement.setInt(1, id);
+            statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             list = parseResultSet(resultSet);
         }

@@ -4,25 +4,15 @@ public class Student {
     private int id;
     private String firstName;
     private String lastName;
-    private int id_auth;
 
     public Student() {
 
     }
 
-    public Student(int id, String firstName, String lastName,int id_auth) {
+    public Student(int id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.id_auth = id_auth;
-    }
-
-    public int getId_auth() {
-        return id_auth;
-    }
-
-    public void setId_auth(int id_auth) {
-        this.id_auth = id_auth;
     }
 
     public int getId() {

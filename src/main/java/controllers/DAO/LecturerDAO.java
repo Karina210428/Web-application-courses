@@ -8,4 +8,6 @@ public interface LecturerDAO extends GenericDAO<Lecturer> {
 
     Lecturer getLectureById(int id);
 
+    Lecturer getLectureByIdAuth(int id);
+
 }

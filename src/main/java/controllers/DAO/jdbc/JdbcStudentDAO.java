@@ -15,7 +15,6 @@ public class JdbcStudentDAO extends JdbcGenericDAO<Student> implements StudentDA
     public static final String STUDENT_COLUMN_ID = "idStudent";
     public static final String STUDENT_COLUMN_FIRST_NAME = "first_name";
     public static final String STUDENT_COLUMN_LAST_NAME = "last_name";
-    public static final String STUDENT_COLUMN_ID_AUTH = "id_authorization";
 
     @Override
     protected String getSelectQuery() {
@@ -24,7 +23,7 @@ public class JdbcStudentDAO extends JdbcGenericDAO<Student> implements StudentDA
 
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO student (first_name, last_name,id_authorization) VALUES (?, ?, ?)";
+        return "INSERT INTO student (first_name, last_name) VALUES (?, ?)";
     }
 
     @Override
@@ -52,7 +51,6 @@ public class JdbcStudentDAO extends JdbcGenericDAO<Student> implements StudentDA
     protected void prepareStatementForCreate(PreparedStatement statement, Student entity) throws SQLException {
         statement.setString(1, entity.getFirstName());
         statement.setString(2, entity.getLastName());
-        statement.setInt(3,entity.getId_auth());
     }
 
     @Override
@@ -69,7 +67,6 @@ public class JdbcStudentDAO extends JdbcGenericDAO<Student> implements StudentDA
                 student.setId(resultSet.getInt(STUDENT_COLUMN_ID));
                 student.setFirstName(resultSet.getString(STUDENT_COLUMN_FIRST_NAME));
                 student.setLastName(resultSet.getString(STUDENT_COLUMN_LAST_NAME));
-                student.setId_auth(resultSet.getInt(STUDENT_COLUMN_ID_AUTH));
                 list.add(student);
             }catch(SQLException ex) {
                // Logger.getLogger(JdbcStudentDao.class.getName()).log(Level.ERROR, null, ex);

@@ -16,7 +16,7 @@ function getAddCourseForms(form, servletUrl){
             startDate:form.startDate.value,
             finishDate:form.finishDate.value,
             lecturer:{
-                id:form.lecture.value,
+                id:1,
                 surname:"surname",
                 patronymic:"patronymic",
                 name:"name"

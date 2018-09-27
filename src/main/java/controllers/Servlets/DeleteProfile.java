@@ -1,9 +1,8 @@
 package controllers.Servlets;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import controllers.Servlets.loginCommand.LoadLocaleTextCommand;
+import controllers.DAO.DAOFactory;
+import controllers.entity.Lecturer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,27 +13,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SetLocale extends HttpServlet {
-
+public class DeleteProfile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
+        response.setContentType("application/json; charset=utf-8");
+        DAOFactory daoFactory = DAOFactory.getDAOFactory();
+
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
-        StringBuilder str = new StringBuilder();
+        String json = "";
         if(br!=null){
-            str.append(br.readLine());
+            json = br.readLine();
         }
         Gson gson = new Gson();
-        JsonParser jsonParser = new JsonParser();
-        JsonObject jsonObject = (JsonObject) jsonParser.parse(str.toString());
-        String language = jsonObject.get("language").toString();
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("locale", language.substring(1, language.length() - 1));
-
-        LoadLocaleTextCommand loadLocaleTextCommand = new LoadLocaleTextCommand();
-        String data = loadLocaleTextCommand.execute(request);
-        response.getWriter().write(data);
+        Lecturer lecturer = (Lecturer) session.getAttribute("lecturer");
+        daoFactory.getLecturerDAO().delete(lecturer);
+        response.getWriter().write(""+ lecturer.getName()+"");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -5,4 +5,5 @@ import controllers.entity.Course;
 public interface CourseDAO extends GenericDAO<Course> {
 
     Course getCourseByName(String nameCourse);
+    Course getCourseById(int id);
 }

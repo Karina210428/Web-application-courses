@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html >
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
     <script type="text/javascript" src="JavaScript/Locale.js"></script>
     <link rel="stylesheet" href="CSS/Form.css" >
     <link rel="stylesheet" href="CSS/Header.css" >
 </head>
-<body onload="fun('en', 'Update'),listCourse()">
+<body onload="fun('en', 'Add'),listCourse()">
 <div class="navcont">
     <div class="nav">
         <ul>
@@ -21,7 +21,7 @@
                 <ul style="list-style-type: none">
                     <li><p id="selectLang">Language</p></li>
                     <li>
-                        <select style="height: 50px; " id="language" onchange="fun(this.options[this.selectedIndex].value, 'Update')">
+                        <select style="height: 50px; " id="language" onchange="fun(this.options[this.selectedIndex].value, 'Add')">
                             <option value="en" text="en">en</option>
                             <option value="ru" text="ru">ru</option>
                         </select>
@@ -76,9 +76,9 @@
 
         </div>
         <div class="row">
-        <div class="col-75">
-           <input type='submit'  id='buttonUpdate'  onclick='getServletXML(document.getElementById("form"),"/HTML/updateAjaxJson","Update")'>
-        </div>
+            <div class="col-75">
+                <input type='submit'  id='buttonAdd' onclick='getServletXML(document.getElementById("form"),"/HTML/addAjaxJson","Add")'>
+            </div>
         </div>
     </form>
 </div>

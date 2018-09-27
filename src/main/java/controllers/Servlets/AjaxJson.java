@@ -18,7 +18,6 @@ import java.util.List;
 public class AjaxJson extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         DAOFactory daoFactory = DAOFactory.getDAOFactory();

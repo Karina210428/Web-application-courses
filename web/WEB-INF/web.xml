@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
     <welcome-file-list>
-        <welcome-file>Start.html</welcome-file>
+        <welcome-file>SignUp.html</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -15,6 +15,26 @@
     <servlet-mapping>
         <servlet-name>Servlet</servlet-name>
         <url-pattern>/Servlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RecordingIdToSession</servlet-name>
+        <servlet-class>controllers.Servlets.RecordingIdToSession</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RecordingIdToSession</servlet-name>
+        <url-pattern>/RecordingIdToSession</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ListCourseForCoursePage</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.ListCourseForCoursePage</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ListCourseForCoursePage</servlet-name>
+        <url-pattern>/ListCourseForCoursePage</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -58,13 +78,13 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>ListLecture</servlet-name>
-        <servlet-class>controllers.Servlets.ListLecture</servlet-class>
+        <servlet-name>ListCourse</servlet-name>
+        <servlet-class>controllers.Servlets.ListCourse</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ListLecture</servlet-name>
-        <url-pattern>/ListLecture</url-pattern>
+        <servlet-name>ListCourse</servlet-name>
+        <url-pattern>/ListCourse</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -126,6 +146,24 @@
     <servlet-mapping>
         <servlet-name>sendAjaxJson</servlet-name>
         <url-pattern>/HTML/sendAjaxJson</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteCourse</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.DeleteCourse</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteCourse</servlet-name>
+        <url-pattern>/DeleteCourse</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteProfile</servlet-name>
+        <servlet-class>controllers.Servlets.DeleteProfile</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteProfile</servlet-name>
+        <url-pattern>/DeleteProfile</url-pattern>
     </servlet-mapping>
 
 

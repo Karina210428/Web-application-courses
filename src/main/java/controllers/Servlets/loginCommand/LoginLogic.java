@@ -9,12 +9,12 @@ public class LoginLogic {
 
     public static  boolean checkLogin(String enterLogin, String enterPass) {
         List<Users> usersList = DAOFactory.getDAOFactory().getUserDAO().findAll();
-        boolean flag = true;
+        boolean flag = false;
         for (Users user : usersList) {
             if (user.getLogin().equalsIgnoreCase(enterLogin)
                     && user.getPassword().equalsIgnoreCase(enterPass)) {
                 return flag = true;
-            } else return flag = false;
+            }
         }
         return flag;
     }

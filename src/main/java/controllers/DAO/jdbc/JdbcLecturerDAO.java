@@ -114,4 +114,22 @@ public class JdbcLecturerDAO extends JdbcGenericDAO<Lecturer> implements Lecture
 			return null;
 		}
 	}
+
+	@Override
+	public Lecturer getLectureByIdAuth(int id) {
+		List<Lecturer> list;
+		String sql = "SELECT * FROM lecturer WHERE id_authorization =  ?";
+		try (Connection connection = JdbcDAOFactory.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			list = parseResultSet(rs);
+			if (list == null || list.isEmpty()) {
+				return null;
+			}
+			return list.get(0);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 }

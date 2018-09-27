@@ -36,7 +36,7 @@ public class JdbcDAOFactory extends DAOFactory {
             e.printStackTrace();
         }
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/electives",
+                "jdbc:mysql://localhost:3306/electives?useUnicode=true&characterEncoding=UTF-8",
                 "root",
                 "root");
     }

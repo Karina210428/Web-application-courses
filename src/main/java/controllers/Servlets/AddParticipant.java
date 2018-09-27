@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,32 +37,24 @@ public class AddParticipant extends HttpServlet {
         daoFactory.getStudentDAO().create(student);
         student = daoFactory.getStudentDAO().getStudentByName(student.getFirstName(), student.getLastName());
 
-        Lecturer lecturer = new Lecturer();
-        lecturer.setName(participant.getCourse().getLecturer().getName());
-        lecturer.setPatronymic(participant.getCourse().getLecturer().getPatronymic());
-        lecturer.setSurname(participant.getCourse().getLecturer().getSurname());
-        daoFactory.getLecturerDAO().create(lecturer);
-        lecturer = daoFactory.getLecturerDAO().getLectureByName(lecturer.getName(), lecturer.getPatronymic(), lecturer.getSurname());
+        HttpSession session = request.getSession(false);
+        Lecturer lecturer = (Lecturer) session.getAttribute("lecturer");
 
-        Course course = new Course();
-        course.setName(participant.getCourse().getName());
-        course.setLecturer(lecturer);
-        daoFactory.getCourseDAO().create(course);
-        course = daoFactory.getCourseDAO().getCourseByName(course.getName());
+        Course course = daoFactory.getCourseDAO().findAll().get(participant.getCourse().getId());
 
         Participant participant1 = new Participant();
-        participant.setStudent(student);
-        participant.setGrade(participant.getGrade());
-        participant.setComment(participant.getComment());
-        participant.setCourse(course);
+        participant1.setStudent(student);
+        participant1.setGrade(participant.getGrade());
+        participant1.setComment(participant.getComment());
+        participant1.setCourse(course);
 
         //daoFactory.getParticipantDAO().create(participant1);
         ParticipantDAO participantDAO = daoFactory.getParticipantDAO();
-        participantDAO.create(participant);
+        participantDAO.create(participant1);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        //response.getWriter().write(send);
+        response.getWriter().write(gson.toJson("OK"));
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
