@@ -11,7 +11,7 @@ public class LoadLocaleTextCommand implements ActionCommand {
         manager.changeResource(request.getSession(false));
         JsonObject data = new JsonObject();
         for(String key: manager.getBundle().keySet()){
-            data.addProperty(key,manager.getString(key).substring(1,manager.getString(key).length()-1));
+            data.addProperty(key,manager.getString(key));
         }
         return  data.toString();
     }

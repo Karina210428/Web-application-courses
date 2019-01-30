@@ -1,11 +1,10 @@
 package controllers.DAO.jdbc;
 
 import controllers.DAO.ParticipantDAO;
-import controllers.entity.Course;
-import controllers.entity.Lecturer;
+import controllers.Servlets.loginCommand.ConfigurationManager;
 import controllers.entity.Participant;
-import controllers.entity.Student;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,27 +26,22 @@ public class JdbcParticipantDAO extends JdbcGenericDAO<Participant> implements P
 
 	@Override
 	protected String getSelectQuery() {
-		return "SELECT p.*, p.idparticipant AS id_p, c.*, s.*, "
-				+ "l.name AS name, l.surname AS surname, l.patronymic AS patronymic"
-				+ " FROM participant p "
-				+ "LEFT JOIN course c ON c.idCourse = course "
-				+ "LEFT JOIN student s ON s.idStudent = student "
-				+ "LEFT JOIN lecturer l ON c.lecturer_id = l.idLecturer ";
+		return ConfigurationManager.getInstance().getProperty("PARTICIPANT_SELECT_QUERY");
 	}
 
 	@Override
 	protected String getCreateQuery() {
-		return "INSERT INTO participant (course, student, grade, comment) VALUES (?, ?, ?, ?)";
+		return ConfigurationManager.getInstance().getProperty("PARTICIPANT_CREATE_QUERY");
 	}
 
 	@Override
 	protected String getUpdateQuery() {
-		return "UPDATE participant SET course = ?, student = ?, grade = ?, comment = ? WHERE idparticipant = ?";
+		return ConfigurationManager.getInstance().getProperty("PARTICIPANT_UPDATE_QUERY");
 	}
 
 	@Override
 	protected String getDeleteQuery() {
-		return "DELETE FROM participant WHERE idparticipant = ?";
+		return ConfigurationManager.getInstance().getProperty("PARTICIPANT_DELETE_QUERY");
 	}
 
 	@Override
@@ -77,57 +71,107 @@ public class JdbcParticipantDAO extends JdbcGenericDAO<Participant> implements P
 	@Override
 	protected List<Participant> parseResultSet(ResultSet rs) throws SQLException {
 		List<Participant> res = new ArrayList<>();
-        while( rs.next() ){
-        	try{
-        	    Participant paricipant = new Participant();
-        	    paricipant.setId(rs.getInt(PARTICIPANT_COLUMN_ID));
-        	    paricipant.setGrade(rs.getInt(PARTICIPANT_COLUMN_GRADE));
-        	    paricipant.setComment(rs.getString(PARTICIPANT_COLUMN_COMMENT) );
+		while( rs.next() ){
+			try {
+				Participant participant = new Participant();
+				participant.setId(rs.getInt(PARTICIPANT_COLUMN_ID));
+				participant.setGrade(rs.getInt(PARTICIPANT_COLUMN_GRADE));
+				participant.setComment(rs.getString(PARTICIPANT_COLUMN_COMMENT) );
+				participant.setStudent(JdbcDAOFactory.getFactory().getStudentDAO().getStudentById(rs.getInt(JdbcParticipantDAO.PARTICIPANT_COLUMN_STUDENT_ID)));
+				participant.setCourse(JdbcDAOFactory.getFactory().getCourseDAO().getCourseById(rs.getInt(JdbcParticipantDAO.PARTICIPANT_COLUMN_COURSE_ID)));
+				res.add(participant);
 
-        	    Student student = new Student();
-		    student.setId(rs.getInt(PARTICIPANT_COLUMN_STUDENT_ID));
-		    student.setFirstName(rs.getString(JdbcStudentDAO.STUDENT_COLUMN_FIRST_NAME));
-		    student.setLastName(rs.getString(JdbcStudentDAO.STUDENT_COLUMN_LAST_NAME));
-		    paricipant.setStudent(student);
-				
-		    Course course = new Course();
-	            course.setId(rs.getInt(PARTICIPANT_COLUMN_COURSE_ID));
-	            course.setName(rs.getString(JdbcCourseDAO.COURSE_COLUMN_NAME));
-	        	
-	            Lecturer lecturer = new Lecturer();
-	            lecturer.setId(rs.getInt(PARTICIPANT_LECTURER_ID));
-	            lecturer.setName(rs.getString(PARTICIPANT_LECTURER_NAME));
-	            lecturer.setSurname(rs.getString(PARTICIPANT_LECTURER_SURNAME));
-	            lecturer.setPatronymic(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_PATRONYMIC));
-	            course.setLecturer(lecturer);
-	            paricipant.setCourse(course);
-                    res.add(paricipant);
-                    }catch(SQLException ex) {
-        		throw ex;
-                    } 
-                }
-        return res;
+			}
+			catch(SQLException ex) {
+				throw ex;
+			}
+	}
+	return res;
 	}
 
-   /* @Override
-    public List<Participant> getParticipantByCourseId(int courseId) {
-        List<Participant> list;
-        String sql = "SELECT p.*, p.id AS id_p, c.*, s.*, "
-		           + "l.first_name AS fname, l.last_name AS lname, l.password"
-		           + " FROM participant p "
-		           + "LEFT JOIN course c ON c.id = course_id "
-		           + "LEFT JOIN student s ON s.id = student_id "
-		           + "LEFT JOIN lecturer l ON c.lecturer_id = l.id WHERE course_id = ?";
-        try (Connection connection = JdbcDaoFactory.getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, courseId);
+	@Override
+	public List<Participant> getParticipantByPage(int pageId, int total) {
+		List<Participant> res = new ArrayList<>();
+		String sql= "select * from participant limit " +(pageId-1)+ " , " +total;
+		try (Connection connection = JdbcDAOFactory.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+			ResultSet resultSet = preparedStatement.executeQuery();
+			res = parseResultSet(resultSet);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return res;
+	}
+
+	@Override
+	public Participant getParticipantByCourseId(int id) {
+		List<Participant> list = null;
+		String sql = "SELECT * FROM participant WHERE course = ? ";
+		try (Connection connection = JdbcDAOFactory.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1,id);
+			ResultSet rs = statement.executeQuery();
+			list = parseResultSet(rs);
+			if (list == null || list.isEmpty()) {
+				return null;
+			}
+			return list.get(0);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+
+    @Override
+    public List<Participant> getParticipantByStudentId(int id) {
+        List<Participant> list = null;
+        String sql = "SELECT * FROM participant WHERE student = ? ";
+        try (Connection connection = JdbcDAOFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1,id);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
+            if (list == null || list.isEmpty()) {
+                return null;
+            }
             return list;
         } catch (SQLException e) {
-            Logger.getLogger(com.chernyak.dao.jdbc.JdbcParticipantDAO.class.getName()).log(Level.ERROR, null, e);
             return null;
-        } 
-    }*/
-	
+        }
+    }
+
+    @Override
+	public Participant getParticipantById(int id) {
+		List<Participant> list = null;
+		String sql = "SELECT * FROM participant WHERE idparticipant = ? ";
+		try (Connection connection = JdbcDAOFactory.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1,id);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+            if (list == null || list.isEmpty()) {
+                return null;
+            }
+            return list.get(0);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Participant> getRecords(int start, int total) {
+		List<Participant> list = null;
+		String sql = "SELECT * FROM participant limit " + (start-1) + "," + total+"";
+		try (Connection connection = JdbcDAOFactory.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+			//statement.setInt(1,id);
+			ResultSet rs = statement.executeQuery();
+			list = parseResultSet(rs);
+			if (list == null || list.isEmpty()) {
+				return null;
+			}
+			return list;
+		} catch (SQLException e) {
+			return null;
+		}
+	}
 }

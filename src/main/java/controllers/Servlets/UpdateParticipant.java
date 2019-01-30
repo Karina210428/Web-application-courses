@@ -33,44 +33,29 @@ public class UpdateParticipant extends HttpServlet {
         HttpSession session = request.getSession(false);
         int id = (Integer) session.getAttribute("idParticipant");
 
-        List<Participant> participantsListToFindByID = daoFactory.getParticipantDAO().findAll();
-        Participant participantToUpdate = participantsListToFindByID.get(id);
-       int idParticipantToUpdate = participantToUpdate.getId();
-//
+        List<Participant> participantsToUpdate = daoFactory.getParticipantDAO().findAll();
+        Participant participantToUpdate = new Participant();
+        for (Participant p : participantsToUpdate) {
+            if(p.getId() == id){
+                participantToUpdate = p;
+            }
+        }
+
         Student student = new Student();
         student.setFirstName(participant.getStudent().getFirstName());
         student.setLastName(participant.getStudent().getLastName());
-       // daoFactory.getStudentDAO().create(student);
-//        //получаем ид студента (идем по ид и получаем ид найденной записи)
         student.setId(participantToUpdate.getStudent().getId());
         daoFactory.getStudentDAO().update(student);
 
-    //    Lecturer lecturer = new Lecturer();
-  //      lecturer.setName(participant.getCourse().getLecturer().getName());
-//        lecturer.setPatronymic(participant.getCourse().getLecturer().getPatronymic());
-//        lecturer.setSurname(participant.getCourse().getLecturer().getSurname());
-//        lecturer.setId(participantToUpdate.getCourse().getLecturer().getId());
-//        daoFactory.getLecturerDAO().update(lecturer);
-//
         Course course = daoFactory.getCourseDAO().getCourseById(participant.getCourse().getId());
-        //course.setName(participant.getCourse().getName());
-        //course.setLecturer(lecturer);
-//        course.setId(participantToUpdate.getCourse().getId());
-//        daoFactory.getCourseDAO().update(course);
-//
-       Participant participant1 = new Participant();
+
+        Participant participant1 = new Participant();
         participant.setStudent(student);
         participant.setGrade(participant.getGrade());
         participant.setComment(participant.getComment());
         participant.setCourse(participant.getCourse());
-        participant.setId(idParticipantToUpdate);
+        participant.setId(participantToUpdate.getId());
         daoFactory.getParticipantDAO().update(participant);
-
-//        List<Participant> participantsList = daoFactory.getParticipantDAO().findAll();
-
-       // String participantsJsonStr = gson.toJson(participantToUpdate);
-
-//        response.getWriter().write(participantsJsonStr);
 
     }
 

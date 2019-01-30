@@ -8,16 +8,6 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>Servlet</servlet-name>
-        <servlet-class>controllers.Servlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>Servlet</servlet-name>
-        <url-pattern>/Servlet</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>RecordingIdToSession</servlet-name>
         <servlet-class>controllers.Servlets.RecordingIdToSession</servlet-class>
     </servlet>
@@ -25,6 +15,96 @@
     <servlet-mapping>
         <servlet-name>RecordingIdToSession</servlet-name>
         <url-pattern>/RecordingIdToSession</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetRoleForCoursePage</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.GetRoleForCoursePage</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetRoleForCoursePage</servlet-name>
+        <url-pattern>/GetRoleForCoursePage</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>controllers.Servlets.LogoutServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>controllers.Servlets.ProfileServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/ProfileServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StudentCourseServlet</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.StudentCourseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StudentCourseServlet</servlet-name>
+        <url-pattern>/StudentCourseServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeleteParticipantStudentServlet</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.DeleteParticipantStudentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DeleteParticipantStudentServlet</servlet-name>
+        <url-pattern>/DeleteParticipantStudentServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RegistrationForCourse</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.RegistrationForCourse</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegistrationForCourse</servlet-name>
+        <url-pattern>/RegistrationForCourse</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RecordingIdCourseToSession</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.RecordingIdCourseToSession</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RecordingIdCourseToSession</servlet-name>
+        <url-pattern>/RecordingIdCourseToSession</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetUpdateCourse</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.GetUpdateCourse</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetUpdateCourse</servlet-name>
+        <url-pattern>/GetUpdateCourse</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GetParticipantUpdate</servlet-name>
+        <servlet-class>controllers.Servlets.GetParticipantUpdate</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetParticipantUpdate</servlet-name>
+        <url-pattern>/GetParticipantUpdate</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -75,6 +155,16 @@
     <servlet-mapping>
         <servlet-name>AddCourse</servlet-name>
         <url-pattern>/AddCourse</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EditCourse</servlet-name>
+        <servlet-class>controllers.Servlets.ServletsForCoursePage.EditCourse</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EditCourse</servlet-name>
+        <url-pattern>/EditCourse</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -164,6 +254,51 @@
     <servlet-mapping>
         <servlet-name>DeleteProfile</servlet-name>
         <url-pattern>/DeleteProfile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ListCompletedCourseServlet</servlet-name>
+        <servlet-class>controllers.Servlets.ListCompletedCourseServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListCompletedCourseServlet</servlet-name>
+        <url-pattern>/ListCompletedCourseServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletAdminInfo</servlet-name>
+        <servlet-class>controllers.Servlets.servletsForAdmin.ServletAdminInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletAdminInfo</servlet-name>
+        <url-pattern>/ServletAdminInfo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletChangeRole</servlet-name>
+        <servlet-class>controllers.Servlets.servletsForAdmin.ServletChangeRole</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletChangeRole</servlet-name>
+        <url-pattern>/ServletChangeRole</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletGetUpdateUser</servlet-name>
+        <servlet-class>controllers.Servlets.servletsForAdmin.ServletGetUpdateUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletGetUpdateUser</servlet-name>
+        <url-pattern>/ServletGetUpdateUser</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ServletRecordingIdUser</servlet-name>
+        <servlet-class>controllers.Servlets.servletsForAdmin.ServletRecordingIdUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletRecordingIdUser</servlet-name>
+        <url-pattern>/ServletRecordingIdUser</url-pattern>
     </servlet-mapping>
 
 

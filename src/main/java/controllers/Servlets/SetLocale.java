@@ -17,7 +17,7 @@ import java.io.InputStreamReader;
 public class SetLocale extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("utf-8");
         response.setContentType("application/json");
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         StringBuilder str = new StringBuilder();

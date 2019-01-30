@@ -31,7 +31,7 @@
 /*}*/
 
 a[type=button] {
-    text-decoration-color: #45a049;
+    text-decoration-color: #e07fff;
 }
 
 div {
@@ -84,10 +84,10 @@ input {
     box-shadow: inset 0 -2px #ebebeb;
 }
 .sign-up-input:focus {
-    border-color: #62c2e4;
+    border-color: #e07fff;
     outline: none;
-    -webkit-box-shadow: inset 0 -2px #62c2e4;
-    box-shadow: inset 0 -2px #62c2e4;
+    -webkit-box-shadow: inset 0 -2px #a95daf;
+    box-shadow: inset 0 -2px #a95daf;
 }
 
 .sign-up-title {
@@ -122,13 +122,13 @@ input {
     color: rgba(0, 0, 0, 0.43);
     text-align: center;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-    background: #d1eee6;
+    background: #a95daf;
     border: 0;
-    border-bottom: 2px solid #9eeedb;
+    border-bottom: 2px solid #a95daf;
     border-radius: 5px;
     cursor: pointer;
-    -webkit-box-shadow: inset 0 -2px #9eeedb;
-    box-shadow: inset 0 -2px #9eeedb;
+    -webkit-box-shadow: inset 0 -2px #a95daf;
+    box-shadow: inset 0 -2px #a95daf;
 }
 .sign-up-button:active {
     top: 1px;

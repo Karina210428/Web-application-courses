@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title id="titleMain"></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="JavaScript/jquery-2.0.3.min.js"></script>
+    <script src="JavaScript/sstu_script.js"></script>
+    <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
+    <script type="text/javascript" src="JavaScript/Locale.js"></script>
+    <link rel="stylesheet" href="CSS/Table.css" />
+</head>
+<body  onload="fun('en', 'Main'),start('/ServletAdminInfo')">
+<div class="left_side">
+    <h1 class="logo_text">
+        <a href=""><img src="images/your%20courses.jpg" height="210" width="250" alt=""></a>
+
+    </h1>
+    <div class="social_img">
+        <ul>
+            <p style="color:#e07fff" id="selectLang">Language</p>
+            <li>
+                <select  id="language" onchange="fun(this.options[this.selectedIndex].value, 'Main')">
+                    <option value="en" text="en">en</option>
+                    <option value="ru" text="ru">ru</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="left_menu">
+        <ul>
+            <li><a href="AdminPage.html" id="aHome"></a></li>
+            <!--<li><a href="NewPageListCourse.html" id="aCourseListPage"></a></li>-->
+            <!--<li><a href="NewCreateCourse.html" id="addCourse"></a></li>-->
+            <!--<li><a href="NewAddEntry.html"  id="addStudent"></a></li>-->
+            <li>
+                <form action="LogoutServlet" method="post">
+                    <a><input type="submit" value="Logout" id="aExit"></a>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+<a href="#" class="left_swap"></a>
+<div class="wrapper">
+    <div class="text_block">
+        <table id="table">
+            <tr><th>№</th><th id='tableThLogin'>login</th><th id='tableThPassword'>password</th><th id='tableThRole'></th><th></th></tr>
+            <tbody id="information">
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">
+
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function start(servletUrl){
+        var xhr = new XMLHttpRequest();
+
+        function reqReadyStateChange() {
+            if (xhr.readyState == 4 && xhr.status== 200) {
+                var json  = JSON.parse(xhr.responseText);
+                // document.getElementById("aStudentCourse").remove();
+                var table = "";
+                for (var i = 0; i < json.length; i++) { // Перебираем объекты
+                    table += "<tr><td>" + parseFloat(i+1) + "</td>";
+                    table +="<td>" + json[i].login + "</td>";
+                    table +="<td>" + json[i].password + "</td>";
+                    table +="<td>" + getStringRole(json[i].idRole) +"</td>";
+                    table += "<td><input src='images/edit.png'  type='image' id='StudentUpdate' alt='Submit' width='48' height='48' onclick=recordingIdUser("+ json[i].id +",'ChangeUserRole.html') > " +
+                        "</tr>";
+                }
+                // Обновляем страницу с новым контентом
+                document.getElementById('information').innerHTML += table;
+            }
+        }
+
+        var user={
+            id:1,
+            login:'login',
+            password:'password',
+            idRole:1
+        };
+
+        var jsonSend = JSON.stringify(user);
+        xhr.open('Post',servletUrl, true, "root","root");
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.onreadystatechange = reqReadyStateChange;
+
+        xhr.send(jsonSend);
+        console.log(jsonSend);
+    }
+
+    function getStringRole(idRole){
+        return (idRole == 1) ? 'Lecturer':
+            (idRole == 2)? 'Student':
+                'Admin';
+    }
+
+    function recordingIdUser(id, page){
+        document.location = page;
+        var xhr = new XMLHttpRequest();
+        var params ={
+            id:1
+        };
+        params.id = id;
+        var jsonSend = JSON.stringify(params);
+        xhr.open('Post',"/ServletRecordingIdUser", true, "root","root");
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.send(jsonSend);
+    }
+</script>

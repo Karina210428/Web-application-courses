@@ -1,56 +1,89 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Insert title here</title>
-    <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
-    <script type="text/javascript" src="JavaScript/PopupScript.js"></script>
-    <script type="text/javascript" src="JavaScript/DeleteProfile.js"></script>
+    <title id="titleMain"></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="JavaScript/jquery-2.0.3.min.js"></script>
+    <script src="JavaScript/sstu_script.js"></script>
     <script type="text/javascript" src="JavaScript/Locale.js"></script>
-    <link rel="stylesheet" href="CSS/Header.css" />
     <link rel="stylesheet" href="CSS/Table.css" />
-    <link rel="stylesheet" href="CSS/registr.css" />
-    <link rel="stylesheet" href="CSS/Button.css" />
-    <link rel="stylesheet" href="CSS/AddCourseForm.css" />
-
-
 </head>
-<body onload="fun('en', 'Profile'),start('/HTML/sendAjaxJson')">
-<div class="wrapper">
-    <div class="navcont">
-        <div class="nav">
-            <ul>
-                <li><a class="active" href="Main.html" id="aHome"></a></li>
+<body  onload="fun('en', 'Profile'),start('/ProfileServlet')">
+<div class="left_side">
+    <h1 class="logo_text">
+        <a href=""><img src="images/your%20courses.jpg" height="210" width="250" alt=""></a>
 
-                <li><a href="SignUp.html" id="aExit"></a></li>
-                <li class="registMenu"><a href="Registration.html" id="aReg"></a></li>
-                <li ><a href="CoursePage.html" id="aCourseListPage"></a></li>
-                <li >
-                    <ul style="list-style-type: none">
-                        <li><p id="selectLang">Language</p></li>
-                        <li>
-                            <select style="height: 50px; " id="language" onchange="fun(this.options[this.selectedIndex].value, 'Profile')">
-                                <option value="en" text="en">en</option>
-                                <option value="ru" text="ru">ru</option>
-                            </select>
-                        </li>
-                    </ul>
-                </li>
-                <li><a type="button" onclick="div_show();" id="addCourse"></a></li>
-                <li><a type="button" href="AddEntry.html"  id="addStudent"></a></li>
-            </ul>
-        </div>
+    </h1>
+    <div class="social_img">
+        <ul>
+            <p style="color:#e07fff" id="selectLang">Language</p>
+            <li>
+                <select  id="language" onchange="fun(this.options[this.selectedIndex].value, 'Profile')">
+                    <option value="en" text="en">en</option>
+                    <option value="ru" text="ru">ru</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="left_menu">
+        <ul>
+            <li><a href="NewMain.html" id="aHome"></a></li>
+            <li><a href="NewPageListCourse.html" id="aCourseListPage"></a></li>
+            <li><a href="NewCreateCourse.html" id="addCourse"></a></li>
+            <li><a href="NewAddEntry.html"  id="addStudent"></a></li>
+            <li><a href="Profile.html" id="aProfile"></a></li>
+            <li>
+                <form action="LogoutServlet" method="post">
+                    <a><input type="submit" value="Logout" id="aExit"></a>
+                </form>
+            </li>
+        </ul>
     </div>
 </div>
+<a href="#" class="left_swap"></a>
+<div class="wrapper">
+    <div id="info" class="text_block">
+        <p id="pName"></p>
+        <p id="pLogin"></p>
+        <form action="DeleteProfile" method="post">
+            <input type="button" id="buttonDeleteProfile" value="Delete" >
+        </form>
 
-    <div class="container2">
-        <div class="container">
-
-            <input type="submit" id="buttonDeleteProfile"  class="sign-up-button" onclick="deleteProfile()">
-
-
-            </div>
-        </div>
+    </div>
+    <div class="footer">
+    </div>
+</div>
 </body>
 </html>
+<script>
+
+    function start(servletUrl) {
+        var xhr = new XMLHttpRequest();
+
+        function reqReadyStateChange() {
+            if (xhr.readyState == 4 && xhr.status== 200) {
+                var json  = JSON.parse(xhr.responseText);
+                    document.getElementById("pName").innerHTML += ": "+ json.name + " " + json.surname;
+                    document.getElementById("pLogin").innerText += ": "+ json.login;
+            }
+        }
+
+        var json = {
+            role : "",
+            name:"",
+            surname:"",
+            login:""
+        };
+
+        var jsonSend = JSON.stringify(json);
+        xhr.open('Post',servletUrl, true, "root","root");
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.onreadystatechange = reqReadyStateChange;
+
+        xhr.send(jsonSend);
+    }
+</script>
+
 

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 public class LogoutCommand implements ActionCommand {
     @Override
     public String execute(HttpServletRequest request) {
-        String page = ConfigurationManager.getProperty("path.page.index");
+        String page = ConfigurationManager.getInstance().getProperty("path.page.index");
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("url",page);
         request.getSession().invalidate();

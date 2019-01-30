@@ -3,11 +3,13 @@ package controllers.Servlets.ServletsForCoursePage;
 import com.google.gson.Gson;
 import controllers.DAO.DAOFactory;
 import controllers.entity.Course;
+import controllers.entity.Lecturer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,14 +30,12 @@ public class DeleteCourse extends HttpServlet {
 
         Course course = gson.fromJson(json,Course.class);
         int id = course.getId();
-        Course courseToFindByIndex = daoFactory.getCourseDAO().findAll().get(id);
-        //Course participantForDelete = participantsListToFindByID.get(id);
+        HttpSession session = request.getSession(false);
+        Lecturer lecturer = (Lecturer) session.getAttribute("lecturer");
+        Course courseToFindByIndex = daoFactory.getCourseDAO().getCourseByLectureId(lecturer.getId()).get(id);
         daoFactory.getCourseDAO().delete(courseToFindByIndex);
-        List<Course> coursesList = daoFactory.getCourseDAO().findAll();
+        List<Course> coursesList = daoFactory.getCourseDAO().getCourseByLectureId(lecturer.getId());
         String participantsJsonStr = gson.toJson(coursesList);
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
         response.getWriter().write(participantsJsonStr);
     }
 

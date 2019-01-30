@@ -24,8 +24,6 @@ public class MessageManager {
 
     public void changeResource(HttpSession session){
         String jsonLocale = session.getAttribute("locale").toString();
-        //String country = jsonLocale.split("_")[0].substring(1);
-        //String language = jsonLocale.split("_")[1].substring(0, jsonLocale.split("_")[1].length()-1);
         Locale current = new Locale(jsonLocale);
         resourceBundle = ResourceBundle.getBundle(resourceName,current);
     }

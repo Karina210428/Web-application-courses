@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import controllers.DAO.DAOFactory;
 import controllers.DAO.ParticipantDAO;
 import controllers.entity.Course;
-import controllers.entity.Lecturer;
 import controllers.entity.Participant;
 import controllers.entity.Student;
 
@@ -12,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,10 +35,7 @@ public class AddParticipant extends HttpServlet {
         daoFactory.getStudentDAO().create(student);
         student = daoFactory.getStudentDAO().getStudentByName(student.getFirstName(), student.getLastName());
 
-        HttpSession session = request.getSession(false);
-        Lecturer lecturer = (Lecturer) session.getAttribute("lecturer");
-
-        Course course = daoFactory.getCourseDAO().findAll().get(participant.getCourse().getId());
+        Course course = daoFactory.getCourseDAO().getCourseById(participant.getCourse().getId());
 
         Participant participant1 = new Participant();
         participant1.setStudent(student);

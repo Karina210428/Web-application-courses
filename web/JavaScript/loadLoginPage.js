@@ -47,13 +47,11 @@ function loadLoginForm(locale) {
             if (request.readyState == 4) {
                 if(request.status == 200) {
                     data = JSON.parse(request.responseText);
-                    if(data.url == null) {
-
+                    if(data.url == undefined){
                         var div = document.createElement("div");
                         div.id = "result";
                         div.innerHTML += locale["message.login.error"];
                         loginForm.appendChild(div);
-                        div.remove();
                     } else {
                         window.location = data.url;
                     }
@@ -88,6 +86,7 @@ function createButton(buttonValue, fun){
 function createLabel(labelValue) {
     var label = document.createElement("label");
     label.class = "sr-only";
+
     return label;
 }
 

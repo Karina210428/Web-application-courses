@@ -4,8 +4,6 @@ function getRegisterForms(form, servletUrl){
         flag="Вы не ввели свою фамилию";
     else if(form.firstname.value=="")
         flag="Вы не ввели своё имя";
-    else if(form.patronymic.value=="")
-        flag="Вы не ввели отчество";
     else if(form.login.value=="")
         flag="Вы не ввели логин";
     else if(form.password1.value=="")
@@ -19,7 +17,6 @@ if(flag==false) {
         login: form.login.value,
         lastName: form.lastname.value,
         firstName: form.firstname.value,
-        patronymic: form.patronymic.value,
         password: form.password1.value,
     };
 

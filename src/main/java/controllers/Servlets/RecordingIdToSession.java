@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import controllers.DAO.DAOFactory;
+import controllers.entity.Lecturer;
 import controllers.entity.Participant;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecordingIdToSession extends HttpServlet {
@@ -31,18 +33,18 @@ public class RecordingIdToSession extends HttpServlet {
         JsonParser jsonParser = new JsonParser();
         JsonObject jsonObject = (JsonObject) jsonParser.parse(str.toString());
 
-        String id =  jsonObject.get("id").toString();
-
+        int id =  jsonObject.get("id").getAsInt();
         HttpSession session = request.getSession(false);
-        session.setAttribute("idParticipant", Integer.parseInt(id));
-
-        int id1 = (Integer) session.getAttribute("idParticipant");
-
-        List<Participant> participantsListToFindByID = daoFactory.getParticipantDAO().findAll();
-        Participant participantToUpdate = participantsListToFindByID.get(id1);
-
+        Lecturer lecturer = (Lecturer) session.getAttribute("lecturer");
+        List<Participant> participantsListByLecturer = new ArrayList<Participant>();
+        for (Participant p: daoFactory.getParticipantDAO().findAll()) {
+            if(p.getCourse().getLecturer().equals(lecturer)) {
+                participantsListByLecturer.add(p);
+            }
+        }
+        Participant participantToUpdate = participantsListByLecturer.get(id);
+        session.setAttribute("idParticipant", participantToUpdate.getId());
         String participantsJsonStr = gson.toJson(participantToUpdate);
-
         response.getWriter().write(participantsJsonStr);
     }
 

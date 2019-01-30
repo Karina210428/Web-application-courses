@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title id="titleMain"></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="JavaScript/jquery-2.0.3.min.js"></script>
+    <script src="JavaScript/sstu_script.js"></script>
+    <script type="text/javascript" src="JavaScript/AddCourseScript.js"></script>
+    <script type="text/javascript" src="JavaScript/Locale.js"></script>
+    <link rel="stylesheet" href="CSS/Form.css" >
+    <link rel="stylesheet" href="CSS/Table.css" />
+</head>
+<body onload="fun('en', 'CreateCourse'),startChangeRolePage('/ServletGetUpdateUser')">
+<div class="left_side">
+    <h1 class="logo_text">
+        <a href=""><img src="images/your%20courses.jpg" height="210" width="250" alt=""></a>
+    </h1>
+    <div class="social_img">
+        <ul>
+            <p style="color:#e07fff" id="selectLang">Language</p>
+            <li>
+                <select  id="language" onchange="fun(this.options[this.selectedIndex].value, 'CreateCourse')">
+                    <option value="en" text="en">en</option>
+                    <option value="ru" text="ru">ru</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="left_menu">
+        <ul>
+            <li><a href="AdminPage.html" id="aHome"></a></li>
+            <li>
+                <form action="LogoutServlet" method="post">
+                    <a><input type="submit" value="Logout" id="aExit"></a>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div>
+<a href="#" class="left_swap"></a>
+<div class="wrapper">
+    <div class="text_block">
+        <form method="POST"  id="form" name ="test" >
+            <div class="row">
+                <div class="col-25">
+                    <label id="nameCourseLabel" for="login"></label>
+                </div>
+                <div class="col-75">
+                    <input type="text" disabled="disabled" class="sign-up-input" id="login" name="login">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label id="namePasswordLabel" for="password"></label>
+                </div>
+                <div class="col-75">
+                    <input type="text" disabled="disabled" class="sign-up-input" id="password" name="password">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label id="listCourseLabel"></label>
+                </div>
+                <div class="col-75" >
+                        <select  id="roles" name="roles" >
+                            <option value="1" >Lecturer</option>
+                            <option value="2" >Student</option>
+                        </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-75">
+                    <input type='submit'  id='buttonAdd' value="Edit" onclick="changeRole(document.getElementById('form'),'/ServletChangeRole')">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    function changeRole(form, servletUrl){
+        var indexRole = {
+            index : 1
+        };
+
+        indexRole.index = form.roles.value;
+
+        var jsonSend = JSON.stringify(indexRole);
+
+        var xhr = new XMLHttpRequest();
+        function reqReadyStateChange() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.location = "NewMain.html";
+            }
+        }
+        xhr.open('Post',servletUrl, true);
+        xhr.readystatechange = reqReadyStateChange();
+        xhr.setRequestHeader('Content-Type','application/json; ');
+        xhr.send(jsonSend);
+    }
+    function  startChangeRolePage(servletUrl) {
+        var xhr = new XMLHttpRequest();
+        function reqReadyStateChange() {
+            if (xhr.readyState == 4 && xhr.status== 200) {
+                var json  = JSON.parse(xhr.responseText);
+                var input = document.getElementById('login');
+                input.value = json.login;
+                var input = document.getElementById('password');
+                input.value = json.password;
+            }
+        }
+        var user={
+            id:1,
+            login:'login',
+            password:'password',
+            idRole:1
+        }
+        var jsonSend = JSON.stringify(user);
+        xhr.open('Post',servletUrl, true, "root","root");
+        xhr.setRequestHeader('Content-Type','application/json');
+        xhr.onreadystatechange = reqReadyStateChange;
+        xhr.send(jsonSend);
+        console.log(jsonSend)
+    }
+</script>

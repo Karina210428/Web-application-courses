@@ -7,7 +7,7 @@ public abstract class DAOFactory {
     public abstract LecturerDAO getLecturerDAO();
     public abstract CourseDAO getCourseDAO();
     public abstract ParticipantDAO getParticipantDAO();
-    public abstract UsersDAO getUserDAO();
+    public abstract UserDAO getUserDAO();
 
     public static DAOFactory getDAOFactory(){
         return JdbcDAOFactory.getFactory();

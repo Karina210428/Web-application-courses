@@ -3,7 +3,6 @@ function fun(languageString, page){
     var params = {
         language:""
     };
-
     params.language = languageString;
     var jsonSend = JSON.stringify(params);
     request.open("post", "/SetLocale", true);
@@ -26,6 +25,10 @@ function fun(languageString, page){
                 updatePage(data,"Add");
             }else if(page=="Profile"){
                 updateProfile(data);
+            }else if(page=="CreateCourse"){
+                updateCreateCoursePage(data);
+            }else if(page=="NewStudentCourse"){
+                updateStudentCoursePage(data);
             }
         }
     }
@@ -35,16 +38,10 @@ function fun(languageString, page){
 function updateMain(data){
     document.getElementById("aHome").innerText = data["main.a.home"];
     document.getElementById("aExit").innerText = data["main.a.Exit"];
-    document.getElementById("aReg").innerText = data["main.a.Register"];
+    document.getElementById("aProfile").innerText = data["menu.a.profile"];
     document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
     document.getElementById("addCourse").innerText = data["main.button.addCourse"];
     document.getElementById("addStudent").innerText = data["main.button.addStudent"];
-    document.getElementById("titlePopup").innerText = data["main.popup.label.title"];
-    document.getElementById("labelPopupName").innerText = data["main.popup.label.name"];
-    document.getElementById("labelPopupStartDate").innerText = data["main.popup.label.startDate"];
-    document.getElementById("labelPopupFinishDate").innerText = data["main.popup.label.finishDate"];
-    document.getElementById("labelPopupAbout").innerText = data["main.popup.label.about"];
-    document.getElementById("PopupAddCourse").innerText = data["main.popup.button.addCourse"];
     document.getElementById("tableThGrade").innerText = data["main.table.th.grade"];
     document.getElementById("tableThStudent").innerText = data["main.table.th.student"];
     document.getElementById("tableThCourse").innerText = data["main.table.th.course"];
@@ -54,34 +51,82 @@ function updateMain(data){
     document.getElementById("StudentUpdate").innerText = data["main.table.a.update"];
     document.getElementById("selectLang").innerText = "";
     document.getElementById("selectLang").innerText = data["main.select.lang"];
+    document.getElementById("aStudentCourse").innerText = data["main.a.StudentCourse"];
+}
+
+function updateProfile(data){
+    document.getElementById("aHome").innerText = data["main.a.home"];
+    document.getElementById("aExit").innerText = data["main.a.Exit"];
+    // document.getElementById("aStudentCourse").innerText = data["main.a.StudentCourse"];
+    document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
+    document.getElementById("addCourse").innerText = data["main.button.addCourse"];
+    document.getElementById("aProfile").innerText = data["menu.a.profile"];
+    document.getElementById("addStudent").innerText = data["main.button.addStudent"];
+    document.getElementById("pName").innerText = data["profile.p.Name"];
+    document.getElementById("pLogin").innerText = data["profile.p.Login"];
+    document.getElementById("buttonEditProfile").innerText = data["profile.button.Edit"];
+    document.getElementById("buttonDeleteProfile").innerText = data["profile.button.Delete"];
+    document.getElementById("selectLang").innerText = "";
+    document.getElementById("selectLang").innerText = data["main.select.lang"];
 }
 
 function updateCoursePage(data){
+    document.getElementById("aStudentCourse").innerText = data["main.a.StudentCourse"];
     document.getElementById("aHome").innerText = data["main.a.home"];
     document.getElementById("aExit").innerText = data["main.a.Exit"];
-    document.getElementById("aReg").innerText = data["main.a.Register"];
+    document.getElementById("aProfile").innerText = data["menu.a.profile"];
     document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
     document.getElementById("addCourse").innerText = data["main.button.addCourse"];
+    document.getElementById("addStudent").innerText = data["main.button.addStudent"];
     document.getElementById("tableThStartDate").innerText = data["page.course.table.th.startDate"];
     document.getElementById("tableThFinishDate").innerText = data["page.course.table.th.finishDate"];
     document.getElementById("tableThCourse").innerText = data["page.course.table.th.course"];
     document.getElementById("tableThLecturer").innerText = data["page.course.table.th.lecturer"];
-    document.getElementById("tableThAbout").innerText = data["page.course.table.th.about"];
+    document.getElementById("tableThComment").innerText = data["page.course.table.th.about"];
     document.getElementById("selectLang").innerText = "";
     document.getElementById("selectLang").innerText = data["main.select.lang"];
-    document.getElementById("titlePopup").innerText = data["main.popup.label.title"];
-    document.getElementById("labelPopupName").innerText = data["main.popup.label.name"];
-    document.getElementById("labelPopupStartDate").innerText = data["main.popup.label.startDate"];
-    document.getElementById("labelPopupFinishDate").innerText = data["main.popup.label.finishDate"];
-    document.getElementById("labelPopupAbout").innerText = data["main.popup.label.about"];
-    document.getElementById("PopupAddCourse").innerText = data["main.popup.button.addCourse"];
+}
+
+
+function updateStudentCoursePage(data){
+    document.getElementById("aStudentCourse").innerText = data["main.a.StudentCourse"];
+    document.getElementById("aExit").innerText = data["main.a.Exit"];
+    document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
+    document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
+    document.getElementById("aProfile").innerText = data["menu.a.profile"];
+
+    document.getElementById("tableThDate").innerText = data["page.course.table.th.Date"];
+    document.getElementById("tableThCourse").innerText = data["page.course.table.th.course"];
+    document.getElementById("tableThLecturer").innerText = data["page.course.table.th.lecturer"];
+    document.getElementById("tableThAbout").innerText = data["page.course.table.th.about"];
+    document.getElementById("tableThGrade").innerText = data["main.table.th.grade"];
+    document.getElementById("tableThComment").innerText = data["main.table.th.comment"];
+    document.getElementById("selectLang").innerText = "";
+    document.getElementById("selectLang").innerText = data["main.select.lang"];
+}
+
+function  updateCreateCoursePage(data) {
+    document.getElementById("nameCourseLabel").innerText = data["main.popup.label.name"];
+    document.getElementById("labelStartDate").innerText = data["main.popup.label.startDate"];
+    document.getElementById("aProfile").innerText = data["menu.a.profile"];
+    document.getElementById("labelFinishDate").innerText = data["main.popup.label.finishDate"];
+    document.getElementById("labelAbout").innerText = data["main.popup.label.about"];
+    document.getElementById("buttonAdd").innerText = data["main.popup.button.addCourse"];
+    document.getElementById("aHome").innerText = data["main.a.home"];
+    document.getElementById("aExit").innerText = data["main.a.Exit"];
+    document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
+    document.getElementById("addCourse").innerText = data["main.button.addCourse"];
+    document.getElementById("addStudent").innerText = data["main.button.addStudent"];
 }
 
 function updatePage(data,page){
     document.getElementById("aHome").innerText = data["main.a.home"];
     document.getElementById("aExit").innerText = data["main.a.Exit"];
-    document.getElementById("aReg").innerText = data["main.a.Register"];
+    document.getElementById("aProfile").innerText = data["menu.a.profile"];
     document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
+    document.getElementById("addCourse").innerText = data["main.button.addCourse"];
+    document.getElementById("addStudent").innerText = data["main.button.addStudent"];
+
     document.getElementById("selectLang").innerText = "";
     document.getElementById("selectLang").innerText = data["main.select.lang"];
 
@@ -131,8 +176,6 @@ function updateRegisterPage(data) {
     inputLogin.placeholder = data["label.form.register.email.placeholder"];
     var inputFN = document.getElementById("fname");
     inputFN.placeholder = data["label.form.register.fname.placeholder"];
-    var inputPatronymic = document.getElementById("patronymic");
-    inputPatronymic.placeholder = data["label.form.register.patronymic.placeholder"];
     var inputLN = document.getElementById("lname");
     inputLN.placeholder = data["label.form.register.lname.placeholder"];
     var inputPass = document.getElementById("password1");
@@ -147,16 +190,4 @@ function updateRegisterPage(data) {
     document.getElementById("titleRegister").innerText=data["label.title.register"];
 
     document.getElementById("buttonRegister").value = data["label.button.register"];
-}
-
-function updateProfile(data) {
-    document.getElementById("aHome").innerText = data["main.a.home"];
-    document.getElementById("aExit").innerText = data["main.a.Exit"];
-    document.getElementById("aReg").innerText = data["main.a.Register"];
-    document.getElementById("aCourseListPage").innerText = data["main.a.CourseListPage"];
-    document.getElementById("addCourse").innerText = data["main.button.addCourse"];
-    document.getElementById("addStudent").innerText = data["main.button.addStudent"];
-    document.getElementById("selectLang").innerText = "";
-    document.getElementById("selectLang").innerText = data["main.select.lang"];
-    document.getElementById("buttonDelete").value = data["page.button.delete"];
 }

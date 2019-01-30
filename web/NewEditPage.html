@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title id="titleMain"></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="JavaScript/jquery-2.0.3.min.js"></script>
+    <script src="JavaScript/sstu_script.js"></script>
+    <script type="text/javascript" src="JavaScript/AjaxJson1.js"></script>
+    <script type="text/javascript" src="JavaScript/Locale.js"></script>
+    <link rel="stylesheet" href="CSS/Form.css" >
+    <link rel="stylesheet" href="CSS/Table.css" />
+</head>
+<body onload="fun('en', 'Update'),listCourse(),startUpdatePage('/GetParticipantUpdate')">
+<div class="left_side">
+    <h1 class="logo_text">
+        <a href=""><img src="images/your%20courses.jpg" height="210" width="250" alt=""></a>
+    </h1>
+    <div class="social_img">
+        <ul>
+            <p style="color:#e07fff" id="selectLang">Language</p>
+            <li>
+                <select  id="language" onchange="fun(this.options[this.selectedIndex].value, 'Update')">
+                    <option value="en" text="en">en</option>
+                    <option value="ru" text="ru">ru</option>
+                </select>
+            </li>
+        </ul>
+    </div>
+    <div class="left_menu">
+        <ul>
+            <li><a href="NewMain.html" id="aHome"></a></li>
+            <li><a href="NewPageListCourse.html" id="aCourseListPage"></a></li>
+            <li><a href="NewCreateCourse.html" id="addCourse"></a></li>
+            <li><a href="NewAddEntry.html"  id="addStudent"></a></li>
+            <li><a href="Profile.html" id="aProfile"></a></li>
+            <li>
+                <form action="LogoutServlet" method="post">
+                    <a><input type="submit" value="Logout" id="aExit"></a>
+                </form>
+            </li>
+        </ul>
+    </div>
+</div><a href="#" class="left_swap"></a>
+<div class="wrapper">
+    <div class="text_block">
+<form method="POST"  id="form" name ="test">
+    <div class="row">
+        <div class="col-25">
+            <label id="firstNameStudentLabel" for="firstNameStudent"></label>
+        </div>
+        <div class="col-75">
+            <input type="text"  class="sign-up-input" id="firstNameStudent" name="firstNameStudent">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label id="lastNameStudentLabel" for="lastNameStudent"></label>
+        </div>
+        <div class="col-75">
+            <input type="text" id="lastNameStudent" name="lastNameStudent" >
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label id="listCourseLabel"></label>
+        </div>
+        <div class="col-75" id="listCourse">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-25">
+            <label id="gradeLabel" for="grade"></label>
+        </div>
+        <div class="col-75">
+            <input id="grade" type="text" name="grade"  style="height:200px">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label id="commentLabel" for="comment"></label>
+        </div>
+        <div class="col-75">
+            <input id="comment" type="text" name="comment"  style="height:200px">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-75">
+            <input type='submit'  id='buttonUpdate'  onclick='getServletXML(document.getElementById("form"),"/HTML/updateAjaxJson","Update")'>
+        </div>
+    </div>
+</form>
+    </div>
+</div>
+</body>
+</html>

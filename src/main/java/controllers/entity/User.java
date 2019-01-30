@@ -1,19 +1,18 @@
 package controllers.entity;
 
-public class Users {
+public class User {
     private int id;
     private String login;
     private String password;
-    private String occupation;
+    private int idRole;
+    public User(){};
 
-    public Users(){};
 
-
-    public Users(int id, String login, String password, String occupation ){
+    public User(int id, String login, String password, int idRole){
         this.login = login;
         this.id = id;
-        this.occupation = occupation;
         this.password = password;
+        this.idRole = idRole;
     }
 
     public int getId() {
@@ -29,10 +28,6 @@ public class Users {
         return password;
     }
 
-    public String getOccupation() {
-        return occupation;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -41,12 +36,15 @@ public class Users {
         this.login = login;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
+    public int getIdRole() {
+        return idRole;
+    }
+
+    public void setIdRole(int idRole) {
+        this.idRole = idRole;
+    }
 }

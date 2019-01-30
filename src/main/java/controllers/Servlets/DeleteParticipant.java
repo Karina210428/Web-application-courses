@@ -2,15 +2,18 @@ package controllers.Servlets;
 
 import com.google.gson.Gson;
 import controllers.DAO.DAOFactory;
+import controllers.entity.Lecturer;
 import controllers.entity.Participant;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DeleteParticipant extends HttpServlet {
@@ -19,8 +22,6 @@ public class DeleteParticipant extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json; charset=utf-8");
         DAOFactory daoFactory = DAOFactory.getDAOFactory();
-
-
         BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()));
         String json = "";
         if(br!=null){
@@ -34,8 +35,15 @@ public class DeleteParticipant extends HttpServlet {
         Participant participantForDelete = participantsListToFindByID.get(id);
         daoFactory.getParticipantDAO().delete(participantForDelete);
         List<Participant> participantsList = daoFactory.getParticipantDAO().findAll();
-        String participantsJsonStr = gson.toJson(participantsList);
-
+        HttpSession session = request.getSession(false);
+        Lecturer lecturer = (Lecturer) session.getAttribute("lecturer");
+        List<Participant> participantsListByLecturer = new ArrayList<Participant>();
+        for (Participant p: participantsList) {
+            if(p.getCourse().getLecturer().equals(lecturer)) {
+                participantsListByLecturer.add(p);
+            }
+        }
+        String participantsJsonStr = gson.toJson(participantsListByLecturer);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(participantsJsonStr);

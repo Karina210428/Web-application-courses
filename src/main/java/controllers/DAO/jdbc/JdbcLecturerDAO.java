@@ -1,6 +1,7 @@
 package controllers.DAO.jdbc;
 
 import controllers.DAO.LecturerDAO;
+import controllers.Servlets.loginCommand.ConfigurationManager;
 import controllers.entity.Lecturer;
 
 import java.sql.Connection;
@@ -15,35 +16,33 @@ public class JdbcLecturerDAO extends JdbcGenericDAO<Lecturer> implements Lecture
     public static final String LECTURER_COLUMN_ID = "idLecturer";
     public static final String LECTURER_COLUMN_NAME = "name";
     public static final String LECTURER_COLUMN_SURNAME = "surname";
-    public static final String LECTURER_COLUMN_PATRONYMIC = "patronymic";
 	public static final String LECTURER_COLUMN_ID_AUTH = "id_authorization";
     
     @Override
     protected String getSelectQuery() {
-		return "SELECT * FROM lecturer";
+		return ConfigurationManager.getInstance().getProperty("LECTURER_SELECT_QUERY");
 	}
 
 	@Override
 	protected String getCreateQuery() {
-		return "INSERT INTO lecturer (name, patronymic , surname,id_authorization) VALUES (?, ?, ?,?)";
+		return ConfigurationManager.getInstance().getProperty("LECTURER_CREATE_QUERY");
 	}
 
 	@Override
 	protected String getUpdateQuery() {
-		return "UPDATE lecturer SET name = ?, surname = ?, patronymic = ? WHERE idLecturer = ?";
+		return ConfigurationManager.getInstance().getProperty("LECTURER_UPDATE_QUERY");
 	}
 
 	@Override
 	protected String getDeleteQuery() {
-		return "DELETE FROM lecturer WHERE idLecturer = ?";
+		return ConfigurationManager.getInstance().getProperty("LECTURER_DELETE_QUERY");
 	}
 
 	@Override
 	protected void prepareStatementForCreate(PreparedStatement statement, Lecturer entity) throws SQLException {
 		statement.setString(1, entity.getName());
-		statement.setString(3, entity.getSurname());
-		statement.setString(2, entity.getPatronymic());
-		statement.setInt(4,entity.getId_auth());
+		statement.setString(2, entity.getSurname());
+		statement.setInt(3,entity.getId_auth());
 		
 	}
 
@@ -51,8 +50,7 @@ public class JdbcLecturerDAO extends JdbcGenericDAO<Lecturer> implements Lecture
 	protected void prepareStatementForUpdate(PreparedStatement statement, Lecturer entity) throws SQLException {
 		statement.setString(1, entity.getName());
 		statement.setString(2, entity.getSurname());
-		statement.setString(3, entity.getPatronymic());
-		statement.setInt(4, entity.getId());
+		statement.setInt(3, entity.getId());
 	}
 
 	@Override
@@ -69,7 +67,6 @@ public class JdbcLecturerDAO extends JdbcGenericDAO<Lecturer> implements Lecture
 		    lecturer.setId(rs.getInt(LECTURER_COLUMN_ID));
                     lecturer.setName(rs.getString(LECTURER_COLUMN_NAME));
                     lecturer.setSurname(rs.getString(LECTURER_COLUMN_SURNAME));
-                    lecturer.setPatronymic(rs.getString(LECTURER_COLUMN_PATRONYMIC));
                     lecturer.setId_auth(rs.getInt(LECTURER_COLUMN_ID_AUTH));
                     res.add(lecturer);
 	            }catch(SQLException ex) {
@@ -79,14 +76,13 @@ public class JdbcLecturerDAO extends JdbcGenericDAO<Lecturer> implements Lecture
 	}
 
 	@Override
-	public Lecturer getLectureByName(String name, String patronymic, String surname) {
+	public Lecturer getLectureByName(String name, String surname) {
 		List<Lecturer> list;
-		String sql = "SELECT * FROM lecturer WHERE name = ? AND patronymic = ? AND surname = ?";
+		String sql = "SELECT * FROM lecturer WHERE name = ? AND surname = ?";
 		try (Connection connection = JdbcDAOFactory.getConnection();
 			 PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setString(1, name);
-			statement.setString(2, patronymic);
-			statement.setString(3,surname);
+			statement.setString(2,surname);
 			ResultSet rs = statement.executeQuery();
 			list = parseResultSet(rs);
 			if (list == null || list.isEmpty()) {

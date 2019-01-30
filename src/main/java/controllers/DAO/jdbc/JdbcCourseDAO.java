@@ -1,8 +1,8 @@
 package controllers.DAO.jdbc;
 
 import controllers.DAO.CourseDAO;
+import controllers.Servlets.loginCommand.ConfigurationManager;
 import controllers.entity.Course;
-import controllers.entity.Lecturer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,22 +24,22 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
     
 	@Override
 	protected String getSelectQuery() {
-		return "SELECT c.*, l.name, l.surname, l.patronymic FROM course c LEFT JOIN lecturer l ON c.lecturer_id = l.idLecturer ";
+		return ConfigurationManager.getInstance().getProperty("COURSE_SELECT_QUERY");
 	}
 
 	@Override
 	protected String getCreateQuery() {
-		return "INSERT INTO course (nameCourse, lecturer_id, startDate, finishDate, about) VALUES (?, ?, ?,?,?)";
+		return ConfigurationManager.getInstance().getProperty("COURSE_CREATE_QUERY");
 	}
 
 	@Override
 	protected String getUpdateQuery() {
-		return "UPDATE course SET nameCourse = ?, lecturer_id = ?,startDate = ?, finishDate= ?, about=? WHERE idCourse = ?";
+		return ConfigurationManager.getInstance().getProperty("COURSE_UPDATE_QUERY");
 	}
 
 	@Override
 	protected String getDeleteQuery() {
-		return "DELETE FROM course WHERE idCourse = ?";
+		return ConfigurationManager.getInstance().getProperty("COURSE_DELETE_QUERY");
 	}
 
 	@Override
@@ -68,18 +68,14 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
 
 	@Override
 	protected List<Course> parseResultSet(ResultSet rs) throws SQLException {
+
 	    List<Course> res = new ArrayList<>();
             while( rs.next() ){
                 try{
 				   Course course = new Course();
 				   course.setId(rs.getInt(COURSE_COLUMN_ID));
 				   course.setName(rs.getString(COURSE_COLUMN_NAME));
-                   Lecturer lecturer = new Lecturer();
-                   lecturer.setId(rs.getInt(COURSE_COLUMN_LECTURER_ID));
-                   lecturer.setName(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_NAME));
-                   lecturer.setSurname(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_SURNAME));
-                   lecturer.setPatronymic(rs.getString(JdbcLecturerDAO.LECTURER_COLUMN_PATRONYMIC));
-                   course.setLecturer(lecturer);
+                   course.setLecturer(JdbcDAOFactory.getFactory().getLecturerDAO().getLectureById(rs.getInt(COURSE_COLUMN_LECTURER_ID)));
                    course.setStartDate(rs.getString(COURSE_COLUMN_STARTDATE));
 					course.setFinishDate(rs.getString(COURSE_COLUMN_FINISHDATE));
 					course.setAboutCourse(rs.getString(COURSE_COLUMN_ABOUT));
@@ -112,8 +108,8 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
 
 	@Override
 	public Course getCourseById(int id) {
-		List<Course> list;
-		String sql = "SELECT * FROM course WHERE nameCourse = ? ";
+		List<Course> list = null;
+		String sql = "SELECT * FROM course WHERE idCourse = ? ";
 		try (Connection connection = JdbcDAOFactory.getConnection();
 			 PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setInt(1,id);
@@ -123,6 +119,24 @@ public class JdbcCourseDAO extends JdbcGenericDAO<Course> implements CourseDAO {
 				return null;
 			}
 			return list.get(0);
+		} catch (SQLException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public List<Course> getCourseByLectureId(int id) {
+		List<Course> list = null;
+		String sql = "SELECT * FROM course WHERE lecturer_id = ? ";
+		try (Connection connection = JdbcDAOFactory.getConnection();
+			 PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1,id);
+			ResultSet rs = statement.executeQuery();
+			list = parseResultSet(rs);
+			if (list == null || list.isEmpty()) {
+				return null;
+			}
+			return list;
 		} catch (SQLException e) {
 			return null;
 		}

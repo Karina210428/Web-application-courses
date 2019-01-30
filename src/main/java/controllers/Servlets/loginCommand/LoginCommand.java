@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controllers.DAO.DAOFactory;
 import controllers.entity.Lecturer;
-import controllers.entity.Users;
+import controllers.entity.Student;
+import controllers.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,19 +21,29 @@ public class LoginCommand implements ActionCommand{
         String login = request.getParameter(PARAM_NAME_LOGIN);
         String password = request.getParameter(PARAM_NAME_PASSWORD);
         boolean flagCheckLogin = LoginLogic.checkLogin(login,password);
+        JsonObject jobj = new JsonObject();
+        String urlToRedirect =  "";
         if(flagCheckLogin == true) {
-
-            Users current = LoginLogic.defineUser(login,password);
+            User current = LoginLogic.defineUser(login,password);
             String jsonUser = new Gson().toJson(current);
             DAOFactory daoFactory = DAOFactory.getDAOFactory();
-            Lecturer lecturer = daoFactory.getLecturerDAO().getLectureByIdAuth(current.getId());
-
             HttpSession session = request.getSession(false);
             session.setAttribute("user",jsonUser);
-            session.setAttribute("lecturer",lecturer);
+            Lecturer lecturer = new Lecturer();
+            Student student = new Student();
+            if(current.getIdRole() == 1) {
+                lecturer = daoFactory.getLecturerDAO().getLectureByIdAuth(current.getId());
+                session.setAttribute("lecturer",lecturer);
+                urlToRedirect = "NewMain.html";
+            }else if(current.getIdRole()==2){
+                 student = daoFactory.getStudentDAO().getStudentByIdAuth(current.getId());
+                 session.setAttribute("student",student);
+                urlToRedirect = "NewPageListCourse.html";
+            }else if( current.getIdRole() == 3){
+                session.setAttribute("admin", "admin");
+                urlToRedirect = "AdminPage.html";
+            }
 
-            JsonObject jobj = new JsonObject();
-            String urlToRedirect =  "Main.html";
 
             jobj.addProperty("url",urlToRedirect);
             data = jobj.toString();

@@ -1,6 +1,7 @@
 package controllers.DAO.jdbc;
 
 import controllers.DAO.*;
+import controllers.Servlets.loginCommand.ConfigurationManager;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -31,14 +32,14 @@ public class JdbcDAOFactory extends DAOFactory {
 
     public static Connection getConnection() throws SQLException {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/electives?useUnicode=true&characterEncoding=UTF-8",
-                "root",
-                "root");
+                ConfigurationManager.getInstance().getProperty("DATABASE_URL"),
+                ConfigurationManager.getInstance().getProperty("DATABASE_USER"),
+                ConfigurationManager.getInstance().getProperty("DATABASE_PASSWORD"));
     }
 
     @Override
@@ -62,7 +63,7 @@ public class JdbcDAOFactory extends DAOFactory {
     }
 
     @Override
-    public UsersDAO getUserDAO() {
-        return new JdbcUsersDAO();
+    public UserDAO getUserDAO() {
+        return new JdbcUserDAO();
     }
 }
